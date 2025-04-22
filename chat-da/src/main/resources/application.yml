@@ -1,3 +1,15 @@
 spring:
   application:
     name: chat-da
+
+  config:
+    import: optional:file:.env[.properties]
+
+  profiles:
+    active: ${PROFILE}
+
+  datasource:
+    driver-class-name: ${DB_DRIVER}
+    url: ${DB_URL}
+    username: ${DB_USER}
+    password: ${DB_PASSWORD}
