@@ -1,4 +1,4 @@
-package site.chatda.domain.report.entity;
+package site.chatda.domain.counsel.entity;
 
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotNull;
@@ -18,11 +18,11 @@ import site.chatda.global.entity.BaseEntity;
 @Builder
 @SQLDelete(sql = " UPDATE Member SET is_deleted = true WHERE report_id = ? ")
 @SQLRestriction("is_deleted = false")
-public class Report extends BaseEntity {
+public class Counsel extends BaseEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "report_id", columnDefinition = "INT UNSIGNED")
+    @Column(name = "counsel_id", columnDefinition = "INT UNSIGNED")
     private Long id;
 
     @NotNull
