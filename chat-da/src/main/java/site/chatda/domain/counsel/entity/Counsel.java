@@ -16,7 +16,7 @@ import site.chatda.global.entity.BaseEntity;
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
-@SQLDelete(sql = " UPDATE Member SET is_deleted = true WHERE report_id = ? ")
+@SQLDelete(sql = " UPDATE Counsel SET is_deleted = true WHERE counsel_id = ? ")
 @SQLRestriction("is_deleted = false")
 public class Counsel extends BaseEntity {
 
