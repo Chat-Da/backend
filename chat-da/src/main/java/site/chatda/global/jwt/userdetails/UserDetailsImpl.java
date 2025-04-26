@@ -4,15 +4,15 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
-import site.chatda.domain.member.entity.Student;
+import site.chatda.domain.member.entity.Member;
 
 import java.util.Collection;
 
 @Getter
 @AllArgsConstructor
-public class StudentDetails implements UserDetails {
+public class UserDetailsImpl implements UserDetails {
 
-    private Student student;
+    private Member member;
 
     private Collection<? extends GrantedAuthority> authorities;
 
@@ -28,6 +28,6 @@ public class StudentDetails implements UserDetails {
 
     @Override
     public String getUsername() {
-        return student.getMember().getUuid();
+        return member.getUuid();
     }
 }

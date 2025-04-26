@@ -6,20 +6,16 @@ import org.springframework.web.bind.support.WebDataBinderFactory;
 import org.springframework.web.context.request.NativeWebRequest;
 import org.springframework.web.method.support.HandlerMethodArgumentResolver;
 import org.springframework.web.method.support.ModelAndViewContainer;
-import site.chatda.domain.member.entity.Student;
-import site.chatda.global.exception.CustomException;
-import site.chatda.global.jwt.userdetails.StudentDetails;
+import site.chatda.domain.member.entity.Member;
+import site.chatda.global.jwt.userdetails.UserDetailsImpl;
 
-import static site.chatda.global.statuscode.ErrorCode.FORBIDDEN;
-
-public class StudentLoginArgumentResolver implements HandlerMethodArgumentResolver {
-
+public class LoginArgumentResolver implements HandlerMethodArgumentResolver {
     @Override
     public boolean supportsParameter(MethodParameter parameter) {
-        boolean hasLoginStudentAnnotation = parameter.hasParameterAnnotation(LoginStudent.class);
-        boolean hasStudentType = Student.class.isAssignableFrom(parameter.getParameterType());
+        boolean hasLoginMemberAnnotation = parameter.hasParameterAnnotation(LoginMember.class);
+        boolean hasMemberType = Member.class.isAssignableFrom(parameter.getParameterType());
 
-        return hasLoginStudentAnnotation && hasStudentType;
+        return hasLoginMemberAnnotation && hasMemberType;
     }
 
     @Override
@@ -30,13 +26,8 @@ public class StudentLoginArgumentResolver implements HandlerMethodArgumentResolv
             return null;
         }
 
-        try {
-            StudentDetails userDetails = (StudentDetails) principal;
+        UserDetailsImpl userDetails = (UserDetailsImpl) principal;
 
-            return userDetails.getStudent();
-
-        } catch (ClassCastException e) {
-            throw new CustomException(FORBIDDEN);
-        }
+        return userDetails.getMember();
     }
 }
