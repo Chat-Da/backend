@@ -1,4 +1,4 @@
-package site.chatda.domain.school;
+package site.chatda.domain.school.entity;
 
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotNull;

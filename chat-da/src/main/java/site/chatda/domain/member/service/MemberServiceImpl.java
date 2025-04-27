@@ -5,7 +5,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import site.chatda.domain.member.dto.res.MemberDetailsRes;
 import site.chatda.domain.member.entity.Member;
-import site.chatda.domain.school.School;
+import site.chatda.domain.school.entity.School;
 import site.chatda.domain.school.repository.SchoolRepository;
 import site.chatda.global.exception.CustomException;
 

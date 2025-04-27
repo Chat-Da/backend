@@ -9,7 +9,7 @@ import lombok.NoArgsConstructor;
 import org.hibernate.annotations.SQLDelete;
 import org.hibernate.annotations.SQLRestriction;
 import site.chatda.domain.member.enums.Role;
-import site.chatda.domain.school.Classes;
+import site.chatda.domain.school.entity.Classes;
 import site.chatda.global.entity.BaseEntity;
 
 @Entity
