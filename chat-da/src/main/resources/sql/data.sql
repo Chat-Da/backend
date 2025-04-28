@@ -1349,6 +1349,5 @@ insert into student(member_id, student_number, src) values
                                                         (4, 3, 'image');
 
 insert into counsel(counsel_id, school_id, level, student_id, teacher_id, step, is_deleted, created_at, modified_at) values
-                                                                                    (1, 1, 3, 2, 1, 'NOTHING', false, current_time, current_time),
                                                                                     (2, 1, 3, 3, 1, 'PENDING', false, current_time, current_time),
                                                                                     (3, 1, 3, 4, 1, 'COMPLETED', false, current_time, current_time);

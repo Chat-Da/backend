@@ -90,7 +90,11 @@ public class MemberServiceImpl implements MemberService {
                 ));
 
         for (StudentDto student : result.getStudents()) {
-            student.setCounselStep(map.get(student.getStudentId()).getDescription());
+            CounselStep step = map.get(student.getStudentId());
+
+            if (step != null) {
+                student.setCounselStep(step.getDescription());
+            }
         }
     }
 }
