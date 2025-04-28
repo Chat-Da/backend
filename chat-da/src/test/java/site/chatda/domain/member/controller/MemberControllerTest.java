@@ -300,7 +300,7 @@ public class MemberControllerTest {
                                 .responseFields(
                                         getCommonResponseFields(
                                                 fieldWithPath("body").type(NULL)
-                                                        .description("비어있음")
+                                                        .description("내용 없음")
                                         )
                                 )
                                 .requestSchema(Schema.schema("학생 리스트 조회 Request"))
@@ -347,7 +347,7 @@ public class MemberControllerTest {
                                 .responseFields(
                                         getCommonResponseFields(
                                                 fieldWithPath("body").type(NULL)
-                                                        .description("비어 있음")
+                                                        .description("내용 없음")
                                         )
                                 )
                                 .requestSchema(Schema.schema("학생 리스트 조회 Request"))

@@ -18,7 +18,7 @@ import site.chatda.global.jwt.JwtUtils;
 
 import static com.epages.restdocs.apispec.MockMvcRestDocumentationWrapper.document;
 import static com.epages.restdocs.apispec.ResourceDocumentation.resource;
-import static com.fasterxml.jackson.databind.jsonFormatVisitors.JsonFormatTypes.NULL;
+import static com.fasterxml.jackson.databind.jsonFormatVisitors.JsonFormatTypes.*;
 import static org.springframework.http.MediaType.APPLICATION_JSON;
 import static org.springframework.restdocs.headers.HeaderDocumentation.headerWithName;
 import static org.springframework.restdocs.mockmvc.RestDocumentationRequestBuilders.post;
@@ -83,9 +83,12 @@ public class CounselControllerTest {
                                 .responseFields(
                                         getCommonResponseFields(
                                                 fieldWithPath("body").type(NULL)
+                                                        .description("내용 없음")
+
                                         )
                                 )
-                                .responseSchema(Schema.schema("학생 상담 신청 Response"))
+                                .requestSchema(Schema.schema("학생 상담 신청 등록 Request"))
+                                .responseSchema(Schema.schema("학생 상담 신청 등록 Response"))
                                 .build()
                         ))
                 );
@@ -117,7 +120,7 @@ public class CounselControllerTest {
                 .andExpect(status().isBadRequest())
                 .andExpect(jsonPath("$.header.message").value(COUNSEL_ALREADY_EXISTS.getMessage()))
                 .andDo(document(
-                        "학생 상담 신청 실패 - 이미 열려있는 상담",
+                        "학생 상담 신청 실패",
                         preprocessRequest(prettyPrint()),
                         preprocessResponse(prettyPrint()),
                         resource(ResourceSnippetParameters.builder()
@@ -129,9 +132,12 @@ public class CounselControllerTest {
                                 .responseFields(
                                         getCommonResponseFields(
                                                 fieldWithPath("body").type(NULL)
+                                                        .description("내용 없음")
+
                                         )
                                 )
-                                .responseSchema(Schema.schema("학생 상담 신청 Response"))
+                                .requestSchema(Schema.schema("학생 상담 신청 등록 Request"))
+                                .responseSchema(Schema.schema("학생 상담 신청 등록 Response"))
                                 .build()
                         ))
                 );
