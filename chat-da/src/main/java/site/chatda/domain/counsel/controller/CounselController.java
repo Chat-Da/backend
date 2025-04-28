@@ -10,7 +10,7 @@ import site.chatda.domain.member.entity.Member;
 import site.chatda.global.argument_resolver.LoginMember;
 import site.chatda.global.dto.ResponseDto;
 
-import static site.chatda.global.statuscode.SuccessCode.OK;
+import static site.chatda.global.statuscode.SuccessCode.CREATED;
 
 @RestController
 @RequestMapping("/api/counsels")
@@ -25,6 +25,6 @@ public class CounselController {
 
         counselService.applyCounsel(member);
 
-        return ResponseDto.success(OK);
+        return ResponseDto.success(CREATED);
     }
 }
