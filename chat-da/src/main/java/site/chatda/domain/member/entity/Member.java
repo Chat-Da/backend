@@ -12,6 +12,10 @@ import site.chatda.domain.member.enums.Role;
 import site.chatda.domain.school.entity.Classes;
 import site.chatda.global.entity.BaseEntity;
 
+import static jakarta.persistence.EnumType.STRING;
+import static jakarta.persistence.FetchType.LAZY;
+import static jakarta.persistence.GenerationType.IDENTITY;
+
 @Entity
 @Getter
 @NoArgsConstructor
@@ -22,7 +26,7 @@ import site.chatda.global.entity.BaseEntity;
 public class Member extends BaseEntity {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue(strategy = IDENTITY)
     @Column(name = "member_id", columnDefinition = "INT UNSIGNED")
     private Long id;
 
@@ -35,10 +39,10 @@ public class Member extends BaseEntity {
     private String name;
 
     @NotNull
-    @Enumerated(EnumType.STRING)
+    @Enumerated(STRING)
     private Role role;
 
-    @ManyToOne(fetch = FetchType.LAZY, optional = false)
+    @ManyToOne(fetch = LAZY, optional = false)
     @JoinColumns(value = {
             @JoinColumn(name = "school_id", nullable = false, insertable = false, updatable = false),
             @JoinColumn(name = "level", nullable = false, insertable = false, updatable = false),

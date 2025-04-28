@@ -6,6 +6,8 @@ import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
+import static jakarta.persistence.FetchType.LAZY;
+
 @Entity
 @Getter
 @NoArgsConstructor
@@ -16,7 +18,7 @@ public class Grade {
     @EmbeddedId
     private GradeId id;
 
-    @ManyToOne(fetch = FetchType.LAZY, optional = false)
+    @ManyToOne(fetch = LAZY, optional = false)
     @MapsId("schoolId")
     @JoinColumn(name = "school_id", columnDefinition = "SMALLINT", nullable = false)
     private School school;
