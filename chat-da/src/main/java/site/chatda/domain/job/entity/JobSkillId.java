@@ -20,6 +20,6 @@ public class JobSkillId implements Serializable {
     private Integer jobId;
 
     @NotNull
-    @Column(columnDefinition = "TINYINT")
+    @Column(columnDefinition = "MEDIUMINT")
     private Integer skillId;
 }
