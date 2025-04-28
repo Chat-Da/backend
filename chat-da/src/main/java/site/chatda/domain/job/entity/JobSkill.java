@@ -25,6 +25,6 @@ public class JobSkill {
 
     @ManyToOne(fetch = LAZY, optional = false)
     @MapsId("skillId")
-    @JoinColumn(name = "skill_id", columnDefinition = "TINYINT")
+    @JoinColumn(name = "skill_id", columnDefinition = "MEDIUMINT")
     private Skill skill;
 }

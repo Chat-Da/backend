@@ -18,7 +18,7 @@ public class Skill {
 
     @Id
     @GeneratedValue(strategy = IDENTITY)
-    @Column(name = "skill_id", columnDefinition = "TINYINT")
+    @Column(name = "skill_id", columnDefinition = "MEDIUMINT")
     private Integer id;
 
     @NotNull

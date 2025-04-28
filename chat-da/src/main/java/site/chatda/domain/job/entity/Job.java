@@ -23,7 +23,7 @@ public class Job {
     private Integer id;
 
     @NotNull
-    @Column(length = 20)
+    @Column(length = 30)
     private String name;
 
     @NotBlank
