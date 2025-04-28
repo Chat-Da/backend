@@ -1,4 +1,4 @@
-package site.chatda.domain.school;
+package site.chatda.domain.job.entity;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Embeddable;
@@ -13,15 +13,13 @@ import java.io.Serializable;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-public class ClassesId implements Serializable {
-
-    private Integer schoolId;
+public class JobSkillId implements Serializable {
 
     @NotNull
     @Column(columnDefinition = "SMALLINT")
-    private Integer level;
+    private Integer jobId;
 
     @NotNull
-    @Column(columnDefinition = "SMALLINT")
-    private Integer classNumber;
+    @Column(columnDefinition = "TINYINT")
+    private Integer skillId;
 }

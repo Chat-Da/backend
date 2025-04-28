@@ -1,4 +1,4 @@
-package site.chatda.domain.school;
+package site.chatda.domain.school.entity;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Embeddable;

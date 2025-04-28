@@ -2,7 +2,7 @@ package site.chatda.domain.member.dto.res;
 
 import lombok.Data;
 import site.chatda.domain.member.entity.Member;
-import site.chatda.domain.school.School;
+import site.chatda.domain.school.entity.School;
 
 @Data
 public class MemberDetailsRes {

@@ -25,6 +25,6 @@ insert into member(member_id, uuid, name, role, school_id, level, class_number, 
 insert into teacher(member_id) values
 (1);
 
-insert into student(member_id) values
-(2),
-(3);
+insert into student(member_id, student_number, src) values
+(2, 1, 'image'),
+(3, 2, 'image');

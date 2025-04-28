@@ -12,6 +12,7 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @Builder
 public class Teacher {
+
     @Id
     @Column(name = "member_id", columnDefinition = "INT UNSIGNED")
     private Long id;
