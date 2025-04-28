@@ -3,8 +3,6 @@ package site.chatda.domain.member.dto;
 import lombok.Data;
 import site.chatda.domain.member.entity.Student;
 
-import static site.chatda.domain.counsel.enums.CounselStep.NOTHING;
-
 @Data
 public class StudentDto {
 
@@ -32,6 +30,6 @@ public class StudentDto {
         this.level = student.getMember().getClasses().getId().getLevel();
         this.classNumber = student.getMember().getClasses().getId().getClassNumber();
         this.studentNumber = student.getStudentNumber();
-        this.counselStep = NOTHING.getDescription();
+        this.counselStep = "상담 없음";
     }
 }

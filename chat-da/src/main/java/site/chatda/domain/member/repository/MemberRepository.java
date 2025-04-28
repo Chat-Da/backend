@@ -7,6 +7,8 @@ import org.springframework.stereotype.Repository;
 import site.chatda.domain.member.dto.CounselStepDto;
 import site.chatda.domain.member.entity.Member;
 import site.chatda.domain.member.entity.Student;
+import site.chatda.domain.member.entity.Teacher;
+import site.chatda.domain.school.entity.Classes;
 
 import java.util.List;
 import java.util.Optional;
@@ -43,4 +45,20 @@ public interface MemberRepository extends JpaRepository<Member, Long> {
             "   where c2.student.id = c.student.id) " +
             "order by c.student.studentNumber")
     List<CounselStepDto> findCounselStepByStudentIds(@Param("studentIds") List<Long> studentIds);
+
+    @Query("select s " +
+            "from Student s " +
+            "join fetch s.member m " +
+            "join fetch m.classes c " +
+            "join fetch c.grade g " +
+            "join fetch g.school " +
+            "where s.id = :studentId")
+    Optional<Student> findStudentByStudentId(@Param("studentId") Long studentId);
+
+    @Query("select t " +
+            "from Teacher t " +
+            "join fetch t.member m " +
+            "join fetch m.classes c " +
+            "where c = :classes ")
+    Optional<Teacher> findHomeRoomTeacher(@Param("classes") Classes classes);
 }
