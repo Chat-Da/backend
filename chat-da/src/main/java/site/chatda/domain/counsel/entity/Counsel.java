@@ -1,6 +1,7 @@
 package site.chatda.domain.counsel.entity;
 
 import jakarta.persistence.*;
+import jakarta.validation.constraints.NotNull;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
@@ -13,6 +14,7 @@ import site.chatda.domain.member.entity.Teacher;
 import site.chatda.domain.school.entity.Grade;
 import site.chatda.global.entity.BaseEntity;
 
+import static jakarta.persistence.EnumType.STRING;
 import static jakarta.persistence.FetchType.LAZY;
 import static jakarta.persistence.GenerationType.IDENTITY;
 
@@ -32,8 +34,8 @@ public class Counsel extends BaseEntity {
 
     @ManyToOne(fetch = LAZY, optional = false)
     @JoinColumns({
-            @JoinColumn(name = "school_id", referencedColumnName = "school_id", insertable = false, updatable = false),
-            @JoinColumn(name = "level", referencedColumnName = "level", insertable = false, updatable = false)
+            @JoinColumn(name = "school_id", referencedColumnName = "school_id"),
+            @JoinColumn(name = "level", referencedColumnName = "level")
     })
     private Grade grade;
 
@@ -45,5 +47,7 @@ public class Counsel extends BaseEntity {
     @JoinColumn(name = "teacher_id", nullable = false)
     private Teacher teacher;
 
+    @NotNull
+    @Enumerated(STRING)
     private CounselStep step;
 }
