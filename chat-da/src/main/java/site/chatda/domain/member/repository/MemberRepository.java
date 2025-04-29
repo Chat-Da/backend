@@ -46,6 +46,11 @@ public interface MemberRepository extends JpaRepository<Member, Long> {
             "order by c.student.studentNumber")
     List<CounselStepDto> findCounselStepByStudentIds(@Param("studentIds") List<Long> studentIds);
 
+    @Query("select t " +
+            "from Teacher t " +
+            "where t.member.id = :memberId")
+    Optional<Teacher> findTeacherByMemberId(@Param("memberId") Long memberId);
+
     @Query("select s " +
             "from Student s " +
             "join fetch s.member m " +

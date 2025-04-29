@@ -46,4 +46,14 @@ public class CounselController {
 
         return ResponseDto.success(OK, result);
     }
+
+    @GetMapping("/students/{studentId}")
+    @PreAuthorize("hasRole('TEACHER')")
+    public ResponseDto<CounselListRes> counselList(@LoginMember Member member,
+                                                   @PathVariable("studentId") Long studentId) {
+
+        CounselListRes result = counselService.findStudentCounsels(member, studentId);
+
+        return ResponseDto.success(OK, result);
+    }
 }

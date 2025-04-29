@@ -9,5 +9,7 @@ public interface CounselService {
 
     void openCounsel(Member member, Long studentId);
 
+    CounselListRes findStudentCounsels(Member member, Long studentId);
+
     CounselListRes findCounsels(Long studentId);
 }
