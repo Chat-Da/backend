@@ -18,6 +18,6 @@ public class GradeId implements Serializable {
     private Integer schoolId;
 
     @NotNull
-    @Column(columnDefinition = "SMALLINT")
+    @Column(columnDefinition = "TINYINT")
     private Integer level;
 }
