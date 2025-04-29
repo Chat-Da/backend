@@ -139,8 +139,6 @@ public class CounselControllerTest {
 
                                         )
                                 )
-                                .requestSchema(Schema.schema("학생 상담 신청 Request"))
-                                .responseSchema(Schema.schema("학생 상담 신청 Response"))
                                 .build()
                         ))
                 );
@@ -190,6 +188,47 @@ public class CounselControllerTest {
     }
 
     @Test
+    @DisplayName("상담 생성 실패 - 이미 열려있는 상담")
+    public void counsel_open_fail_already_exists() throws Exception {
+
+        // given
+        Long studentId = 3L;
+
+        // when
+        ResultActions actions = mockMvc.perform(
+                post("/api/counsels/students/{studentId}", studentId)
+                        .header("Authorization", "Bearer " + teacherToken)
+                        .accept(APPLICATION_JSON)
+                        .characterEncoding("UTF-8")
+        );
+
+        // then
+        actions
+                .andExpect(status().isBadRequest())
+                .andExpect(jsonPath("$.header.message").value(COUNSEL_ALREADY_EXISTS.getMessage()))
+                .andDo(document(
+                        "상담 생성 실패 - 이미 열려있는 상담",
+                        preprocessRequest(prettyPrint()),
+                        preprocessResponse(prettyPrint()),
+                        resource(ResourceSnippetParameters.builder()
+                                .tag("Counsel API")
+                                .summary("상담 생성 API")
+                                .requestHeaders(
+                                        headerWithName("Authorization").description("선생 어세스 토큰")
+                                )
+                                .responseFields(
+                                        getCommonResponseFields(
+                                                fieldWithPath("body").type(NULL)
+                                                        .description("내용 없음")
+
+                                        )
+                                )
+                                .build()
+                        ))
+                );
+    }
+
+    @Test
     @DisplayName("상담 생성 실패 - 다른 반 학생")
     public void counsel_open_fail_other_class_student() throws Exception {
 
@@ -225,8 +264,6 @@ public class CounselControllerTest {
 
                                         )
                                 )
-                                .requestSchema(Schema.schema("상담 생성 Request"))
-                                .responseSchema(Schema.schema("상담 생성 Response"))
                                 .build()
                         ))
                 );
@@ -268,8 +305,6 @@ public class CounselControllerTest {
 
                                         )
                                 )
-                                .requestSchema(Schema.schema("상담 생성 Request"))
-                                .responseSchema(Schema.schema("상담 생성 Response"))
                                 .build()
                         ))
                 );
