@@ -54,7 +54,7 @@ public class CounselServiceImpl implements CounselService {
         Student student = memberRepository.findStudentByStudentId(studentId)
                 .orElseThrow(() -> new CustomException(NOT_FOUND));
 
-        Teacher teacher = memberRepository.findHomeRoomTeacher(member.getClasses())
+        Teacher teacher = memberRepository.findHomeRoomTeacher(student.getMember().getClasses())
                 .orElseThrow(() -> new CustomException(NOT_FOUND));
 
         if (!member.getId().equals(teacher.getId())) {
