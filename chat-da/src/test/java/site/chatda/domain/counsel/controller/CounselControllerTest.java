@@ -356,8 +356,140 @@ public class CounselControllerTest {
                                                         .description("상담 종료 날짜")
                                         )
                                 )
-                                .requestSchema(Schema.schema("상내 상담 내역 조회 Request"))
+                                .requestSchema(Schema.schema("내 상담 내역 조회 Request"))
                                 .responseSchema(Schema.schema("내 상담 내역 조회 Response"))
+                                .build()
+                        ))
+                );
+    }
+
+    @Test
+    @DisplayName("담당 학생 상담 내역 조회 성공")
+    public void student_counsel_list_success() throws Exception {
+
+        // given
+        Long studentId = 2L;
+
+        // when
+        ResultActions actions = mockMvc.perform(
+                get("/api/counsels/students/{studentId}", studentId)
+                        .header("Authorization", "Bearer " + teacherToken)
+                        .accept(APPLICATION_JSON)
+                        .characterEncoding("UTF-8")
+        );
+
+        // then
+        actions
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$.header.message").value(OK.getMessage()))
+                .andDo(document(
+                        "담당 학생 상담 내역 조회 성공",
+                        preprocessRequest(prettyPrint()),
+                        preprocessResponse(prettyPrint()),
+                        resource(ResourceSnippetParameters.builder()
+                                .tag("Counsel API")
+                                .summary("담당 학생 상담 내역 조회 API")
+                                .requestHeaders(
+                                        headerWithName("Authorization").description("선생 어세스 토큰")
+                                )
+                                .responseFields(
+                                        getCommonResponseFields(
+                                                fieldWithPath("body.counsels").type(ARRAY)
+                                                        .description("상담 내역"),
+                                                fieldWithPath("body.counsels[].counselId").type(NUMBER)
+                                                        .description("상담 아이디"),
+                                                fieldWithPath("body.counsels[].teacherName").type(STRING)
+                                                        .description("담당 선생님"),
+                                                fieldWithPath("body.counsels[].step").type(STRING)
+                                                        .description("상담 단계"),
+                                                fieldWithPath("body.counsels[].startDate").type(STRING)
+                                                        .description("상담 시작 날짜"),
+                                                fieldWithPath("body.counsels[].endDate").type(STRING)
+                                                        .description("상담 종료 날짜")
+                                        )
+                                )
+                                .requestSchema(Schema.schema("담당 학생 상담 내역 조회 Request"))
+                                .responseSchema(Schema.schema("담당 학생 상담 내역 조회 Response"))
+                                .build()
+                        ))
+                );
+    }
+
+    @Test
+    @DisplayName("담당 학생 상담 내역 조회 실패 - 다른 반 학생")
+    public void student_counsel_list_fail_other_class() throws Exception {
+
+        // given
+        Long studentId = 10002L;
+
+        // when
+        ResultActions actions = mockMvc.perform(
+                get("/api/counsels/students/{studentId}", studentId)
+                        .header("Authorization", "Bearer " + teacherToken)
+                        .accept(APPLICATION_JSON)
+                        .characterEncoding("UTF-8")
+        );
+
+        // then
+        actions
+                .andExpect(status().isForbidden())
+                .andExpect(jsonPath("$.header.message").value(FORBIDDEN.getMessage()))
+                .andDo(document(
+                        "담당 학생 상담 내역 조회 실패 - 다른 반 학생",
+                        preprocessRequest(prettyPrint()),
+                        preprocessResponse(prettyPrint()),
+                        resource(ResourceSnippetParameters.builder()
+                                .tag("Counsel API")
+                                .summary("담당 학생 상담 내역 조회 API")
+                                .requestHeaders(
+                                        headerWithName("Authorization").description("선생 어세스 토큰")
+                                )
+                                .responseFields(
+                                        getCommonResponseFields(
+                                                fieldWithPath("body").type(NULL)
+                                                        .description("내용 없음")
+                                        )
+                                )
+                                .build()
+                        ))
+                );
+    }
+
+    @Test
+    @DisplayName("담당 학생 상담 내역 조회 실패 - 존재하지 않는 학생 아이디")
+    public void student_counsel_list_fail_wrong_student_id() throws Exception {
+
+        // given
+        Long studentId = 20002L;
+
+        // when
+        ResultActions actions = mockMvc.perform(
+                get("/api/counsels/students/{studentId}", studentId)
+                        .header("Authorization", "Bearer " + teacherToken)
+                        .accept(APPLICATION_JSON)
+                        .characterEncoding("UTF-8")
+        );
+
+        // then
+        actions
+                .andExpect(status().isNotFound())
+                .andExpect(jsonPath("$.header.message").value(NOT_FOUND.getMessage()))
+                .andDo(document(
+                        "담당 학생 상담 내역 조회 실패 - 존재하지 않는 학생 아이디",
+                        preprocessRequest(prettyPrint()),
+                        preprocessResponse(prettyPrint()),
+                        resource(ResourceSnippetParameters.builder()
+                                .tag("Counsel API")
+                                .summary("담당 학생 상담 내역 조회 API")
+                                .requestHeaders(
+                                        headerWithName("Authorization").description("선생 어세스 토큰")
+                                )
+                                .responseFields(
+                                        getCommonResponseFields(
+                                                fieldWithPath("body").type(NULL)
+                                                        .description("내용 없음")
+                                        )
+                                )
                                 .build()
                         ))
                 );

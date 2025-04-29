@@ -199,6 +199,8 @@ public class MemberControllerTest {
                                                         .description("상담 단계")
                                         )
                                 )
+                                .requestSchema(Schema.schema("학생 리스트 조회 Request"))
+                                .responseSchema(Schema.schema("학생 리스트 조회 Response"))
                                 .build()
                         ))
                 );

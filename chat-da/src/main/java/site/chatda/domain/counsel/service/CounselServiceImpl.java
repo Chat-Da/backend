@@ -52,15 +52,13 @@ public class CounselServiceImpl implements CounselService {
     @Transactional
     public void openCounsel(Member member, Long studentId) {
 
+        checkMyStudent(member.getId(), studentId);
+
         Student student = memberRepository.findStudentByStudentId(studentId)
                 .orElseThrow(() -> new CustomException(NOT_FOUND));
 
-        Teacher teacher = memberRepository.findHomeRoomTeacher(student.getMember().getClasses())
+        Teacher teacher = memberRepository.findTeacherByMemberId(member.getId())
                 .orElseThrow(() -> new CustomException(NOT_FOUND));
-
-        if (!member.getId().equals(teacher.getId())) {
-            throw new CustomException(FORBIDDEN);
-        }
 
         Counsel counsel = getRecentCounselFromDB(studentId);
 
@@ -106,6 +104,27 @@ public class CounselServiceImpl implements CounselService {
                 .teacher(teacher)
                 .step(step)
                 .build();
+    }
+
+    @Override
+    public CounselListRes findStudentCounsels(Member member, Long studentId) {
+
+        checkMyStudent(member.getId(), studentId);
+
+        return findCounsels(studentId);
+    }
+
+    private void checkMyStudent(Long teacherId, Long studentId) {
+
+        Student student = memberRepository.findStudentByStudentId(studentId)
+                .orElseThrow(() -> new CustomException(NOT_FOUND));
+
+        Teacher teacher = memberRepository.findHomeRoomTeacher(student.getMember().getClasses())
+                .orElseThrow(() -> new CustomException(NOT_FOUND));
+
+        if (!teacher.getId().equals(teacherId)) {
+            throw new CustomException(FORBIDDEN);
+        }
     }
 
     @Override
