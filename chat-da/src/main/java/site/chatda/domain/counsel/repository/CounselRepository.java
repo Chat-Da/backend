@@ -17,4 +17,12 @@ public interface CounselRepository extends JpaRepository<Counsel, Long> {
             "where c.student.id = :studentId " +
             "order by c.modifiedAt desc ")
     List<Counsel> findRecentCounsel(@Param("studentId") Long studentId, Pageable pageable);
+
+    @Query("select c " +
+            "from Counsel c " +
+            "join fetch c.teacher t " +
+            "join fetch t.member m " +
+            "where c.student.id = :studentId " +
+            "order by c.modifiedAt desc ")
+    List<Counsel> findAllCounselByStudent(@Param("studentId") Long studentId);
 }

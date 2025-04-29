@@ -1353,5 +1353,8 @@ insert into student(member_id, student_number, src) values
                                                         (10002, 1, 'image');
 
 insert into counsel(counsel_id, school_id, level, student_id, teacher_id, step, is_deleted, created_at, modified_at) values
-                                                                                    (2, 1, 3, 3, 1, 'PENDING', false, current_time, current_time),
-                                                                                    (3, 1, 3, 4, 1, 'COMPLETED', false, current_time, current_time);
+                                                                                    (1, 1, 1, 2, 10001, 'COMPLETED', false, '2023-03-05 00:00:00', '2023-03-06 00:00:00'),
+                                                                                    (2, 1, 1, 2, 10001, 'COMPLETED', false, '2023-09-06 00:00:00', '2023-09-07 00:00:00'),
+                                                                                    (3, 1, 2, 2, 1, 'COMPLETED', false, '2024-03-11 00:00:00', '2024-03-12 00:00:00'),
+                                                                                    (4, 1, 2, 2, 1, 'COMPLETED', false, '2024-09-03 00:00:00', '2024-09-05 00:00:00'),
+                                                                                    (5, 1, 3, 3, 1, 'PENDING', false, current_time, current_time);
