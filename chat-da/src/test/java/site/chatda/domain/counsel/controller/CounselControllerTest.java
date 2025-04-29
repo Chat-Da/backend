@@ -21,6 +21,7 @@ import static com.epages.restdocs.apispec.ResourceDocumentation.resource;
 import static com.fasterxml.jackson.databind.jsonFormatVisitors.JsonFormatTypes.*;
 import static org.springframework.http.MediaType.APPLICATION_JSON;
 import static org.springframework.restdocs.headers.HeaderDocumentation.headerWithName;
+import static org.springframework.restdocs.mockmvc.RestDocumentationRequestBuilders.get;
 import static org.springframework.restdocs.mockmvc.RestDocumentationRequestBuilders.post;
 import static org.springframework.restdocs.operation.preprocess.Preprocessors.*;
 import static org.springframework.restdocs.operation.preprocess.Preprocessors.prettyPrint;
@@ -29,6 +30,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 import static site.chatda.global.statuscode.ErrorCode.*;
 import static site.chatda.global.statuscode.SuccessCode.CREATED;
+import static site.chatda.global.statuscode.SuccessCode.OK;
 import static site.chatda.utils.ResponseFieldUtils.getCommonResponseFields;
 
 @Transactional
@@ -305,6 +307,57 @@ public class CounselControllerTest {
 
                                         )
                                 )
+                                .build()
+                        ))
+                );
+    }
+
+    @Test
+    @DisplayName("내 상담 내역 조회 성공")
+    public void my_counsel_list_success() throws Exception {
+
+        // given
+
+        // when
+        ResultActions actions = mockMvc.perform(
+                get("/api/counsels")
+                        .header("Authorization", "Bearer " + studentToken)
+                        .accept(APPLICATION_JSON)
+                        .characterEncoding("UTF-8")
+        );
+
+        // then
+        actions
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$.header.message").value(OK.getMessage()))
+                .andDo(document(
+                        "내 상담 내역 조회 성공",
+                        preprocessRequest(prettyPrint()),
+                        preprocessResponse(prettyPrint()),
+                        resource(ResourceSnippetParameters.builder()
+                                .tag("Counsel API")
+                                .summary("내 상담 내역 조회 API")
+                                .requestHeaders(
+                                        headerWithName("Authorization").description("학생 어세스 토큰")
+                                )
+                                .responseFields(
+                                        getCommonResponseFields(
+                                                fieldWithPath("body.counsels").type(ARRAY)
+                                                        .description("상담 내역"),
+                                                fieldWithPath("body.counsels[].counselId").type(NUMBER)
+                                                        .description("상담 아이디"),
+                                                fieldWithPath("body.counsels[].teacherName").type(STRING)
+                                                        .description("담당 선생님"),
+                                                fieldWithPath("body.counsels[].step").type(STRING)
+                                                        .description("상담 단계"),
+                                                fieldWithPath("body.counsels[].startDate").type(STRING)
+                                                        .description("상담 시작 날짜"),
+                                                fieldWithPath("body.counsels[].endDate").type(STRING)
+                                                        .description("상담 종료 날짜")
+                                        )
+                                )
+                                .requestSchema(Schema.schema("상내 상담 내역 조회 Request"))
+                                .responseSchema(Schema.schema("내 상담 내역 조회 Response"))
                                 .build()
                         ))
                 );
