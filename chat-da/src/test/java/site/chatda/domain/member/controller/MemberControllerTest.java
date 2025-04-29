@@ -83,7 +83,7 @@ public class MemberControllerTest {
                                 .tag("Member API")
                                 .summary("멤버 정보조회 API")
                                 .requestHeaders(
-                                        headerWithName("Authorization").description("어세스 토큰")
+                                        headerWithName("Authorization").description("학생 어세스 토큰")
                                 )
                                 .responseFields(
                                         getCommonResponseFields(
@@ -129,7 +129,7 @@ public class MemberControllerTest {
                                 .tag("Member API")
                                 .summary("멤버 정보조회 API")
                                 .requestHeaders(
-                                        headerWithName("Authorization").description("어세스 토큰")
+                                        headerWithName("Authorization").description("선생 어세스 토큰")
                                 )
                                 .responseFields(
                                         getCommonResponseFields(
@@ -175,7 +175,7 @@ public class MemberControllerTest {
                                 .tag("Member API")
                                 .summary("학생 리스트 조회 API")
                                 .requestHeaders(
-                                        headerWithName("Authorization").description("어세스 토큰")
+                                        headerWithName("Authorization").description("선생 어세스 토큰")
                                 )
                                 .responseFields(
                                         getCommonResponseFields(
@@ -199,8 +199,6 @@ public class MemberControllerTest {
                                                         .description("상담 단계")
                                         )
                                 )
-                                .requestSchema(Schema.schema("학생 리스트 조회 Request"))
-                                .responseSchema(Schema.schema("학생 리스트 조회 Response"))
                                 .build()
                         ))
                 );
@@ -234,7 +232,7 @@ public class MemberControllerTest {
                                 .tag("Member API")
                                 .summary("학생 리스트 조회 API")
                                 .requestHeaders(
-                                        headerWithName("Authorization").description("어세스 토큰")
+                                        headerWithName("Authorization").description("선생 어세스 토큰")
                                 )
                                 .queryParameters(
                                         parameterWithName("counselStep").optional()
@@ -295,7 +293,7 @@ public class MemberControllerTest {
                                 .tag("Member API")
                                 .summary("학생 리스트 조회 API")
                                 .requestHeaders(
-                                        headerWithName("Authorization").description("어세스 토큰")
+                                        headerWithName("Authorization").description("학생 어세스 토큰")
                                 )
                                 .responseFields(
                                         getCommonResponseFields(
@@ -303,8 +301,6 @@ public class MemberControllerTest {
                                                         .description("내용 없음")
                                         )
                                 )
-                                .requestSchema(Schema.schema("학생 리스트 조회 Request"))
-                                .responseSchema(Schema.schema("학생 리스트 조회 Response"))
                                 .build()
                         ))
                 );
@@ -338,7 +334,7 @@ public class MemberControllerTest {
                                 .tag("Member API")
                                 .summary("학생 리스트 조회 API")
                                 .requestHeaders(
-                                        headerWithName("Authorization").description("어세스 토큰")
+                                        headerWithName("Authorization").description("선생 어세스 토큰")
                                 )
                                 .queryParameters(
                                         parameterWithName("counselStep").optional()
@@ -350,8 +346,6 @@ public class MemberControllerTest {
                                                         .description("내용 없음")
                                         )
                                 )
-                                .requestSchema(Schema.schema("학생 리스트 조회 Request"))
-                                .responseSchema(Schema.schema("학생 리스트 조회 Response"))
                                 .build()
                         ))
                 );

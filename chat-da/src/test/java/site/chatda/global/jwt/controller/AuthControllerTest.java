@@ -60,7 +60,7 @@ public class AuthControllerTest {
                                 .tag("Auth API")
                                 .summary("학생 로그인 API")
                                 .responseHeaders(
-                                        headerWithName("Authorization").description("어세스 토큰")
+                                        headerWithName("Authorization").description("학생 어세스 토큰")
                                 )
                                 .responseFields(
                                         getCommonResponseFields(
@@ -97,7 +97,7 @@ public class AuthControllerTest {
                                 .tag("Auth API")
                                 .summary("선생 로그인 API")
                                 .responseHeaders(
-                                        headerWithName("Authorization").description("어세스 토큰")
+                                        headerWithName("Authorization").description("선생 어세스 토큰")
                                 )
                                 .responseFields(
                                         getCommonResponseFields(

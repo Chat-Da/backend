@@ -139,8 +139,6 @@ public class CounselControllerTest {
 
                                         )
                                 )
-                                .requestSchema(Schema.schema("학생 상담 신청 Request"))
-                                .responseSchema(Schema.schema("학생 상담 신청 Response"))
                                 .build()
                         ))
                 );
@@ -225,8 +223,6 @@ public class CounselControllerTest {
 
                                         )
                                 )
-                                .requestSchema(Schema.schema("상담 생성 Request"))
-                                .responseSchema(Schema.schema("상담 생성 Response"))
                                 .build()
                         ))
                 );
@@ -268,8 +264,6 @@ public class CounselControllerTest {
 
                                         )
                                 )
-                                .requestSchema(Schema.schema("상담 생성 Request"))
-                                .responseSchema(Schema.schema("상담 생성 Response"))
                                 .build()
                         ))
                 );
@@ -311,8 +305,6 @@ public class CounselControllerTest {
 
                                         )
                                 )
-                                .requestSchema(Schema.schema("상담 생성 Request"))
-                                .responseSchema(Schema.schema("상담 생성 Response"))
                                 .build()
                         ))
                 );
