@@ -2,7 +2,9 @@ package site.chatda.domain.counsel.controller;
 
 import com.epages.restdocs.apispec.ResourceSnippetParameters;
 import com.epages.restdocs.apispec.Schema;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import jakarta.annotation.PostConstruct;
+import org.json.JSONObject;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -21,8 +23,7 @@ import static com.epages.restdocs.apispec.ResourceDocumentation.resource;
 import static com.fasterxml.jackson.databind.jsonFormatVisitors.JsonFormatTypes.*;
 import static org.springframework.http.MediaType.APPLICATION_JSON;
 import static org.springframework.restdocs.headers.HeaderDocumentation.headerWithName;
-import static org.springframework.restdocs.mockmvc.RestDocumentationRequestBuilders.get;
-import static org.springframework.restdocs.mockmvc.RestDocumentationRequestBuilders.post;
+import static org.springframework.restdocs.mockmvc.RestDocumentationRequestBuilders.*;
 import static org.springframework.restdocs.operation.preprocess.Preprocessors.*;
 import static org.springframework.restdocs.operation.preprocess.Preprocessors.prettyPrint;
 import static org.springframework.restdocs.payload.PayloadDocumentation.fieldWithPath;
@@ -50,6 +51,7 @@ public class CounselControllerTest {
     private static final String teacherUUID = "5a1e826e-2a44-4fea-98b2-bb96887b9737";
     private String studentToken;
     private String teacherToken;
+    private final ObjectMapper mapper = new ObjectMapper();
 
     @PostConstruct
     public void init() {
@@ -483,6 +485,196 @@ public class CounselControllerTest {
                                 .summary("담당 학생 상담 내역 조회 API")
                                 .requestHeaders(
                                         headerWithName("Authorization").description("선생 어세스 토큰")
+                                )
+                                .responseFields(
+                                        getCommonResponseFields(
+                                                fieldWithPath("body").type(NULL)
+                                                        .description("내용 없음")
+                                        )
+                                )
+                                .build()
+                        ))
+                );
+    }
+
+    @Test
+    @DisplayName("상담 단계 변경 성공")
+    public void counsel_step_change_success() throws Exception {
+
+        // given
+        Long counselId = 5L;
+
+        JSONObject jsonObject = new JSONObject();
+        jsonObject.put("step", "COMPLETED");
+
+        String content = jsonObject.toString();
+
+        // when
+        ResultActions actions = mockMvc.perform(
+                patch("/api/counsels/{counselId}", counselId)
+                        .header("Authorization", "Bearer " + teacherToken)
+                        .accept(APPLICATION_JSON)
+                        .contentType(APPLICATION_JSON)
+                        .content(content)
+                        .characterEncoding("UTF-8")
+        );
+
+        // then
+        actions
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$.header.message").value(OK.getMessage()))
+                .andDo(document(
+                        "상담 단계 변경 성공",
+                        preprocessRequest(prettyPrint()),
+                        preprocessResponse(prettyPrint()),
+                        resource(ResourceSnippetParameters.builder()
+                                .tag("Counsel API")
+                                .summary("상담 단계 변경 API")
+                                .requestHeaders(
+                                        headerWithName("Authorization").description("어세스 토큰")
+                                )
+                                .responseFields(
+                                        getCommonResponseFields(
+                                                fieldWithPath("body").type(NULL)
+                                                        .description("내용 없음")
+                                        )
+                                )
+                                .requestSchema(Schema.schema("상담 단계 변경 Request"))
+                                .responseSchema(Schema.schema("상담 단계 변경 Response"))
+                                .build()
+                        ))
+                );
+    }
+
+    @Test
+    @DisplayName("상담 단계 변경 실패 - 잘못된 단계 입력")
+    public void counsel_step_change_fail_wrong_step() throws Exception {
+
+        // given
+        Long counselId = 5L;
+
+        JSONObject jsonObject = new JSONObject();
+        jsonObject.put("step", "IN_PROGRESS");
+
+        String content = jsonObject.toString();
+
+        // when
+        ResultActions actions = mockMvc.perform(
+                patch("/api/counsels/{counselId}", counselId)
+                        .header("Authorization", "Bearer " + teacherToken)
+                        .accept(APPLICATION_JSON)
+                        .contentType(APPLICATION_JSON)
+                        .content(content)
+                        .characterEncoding("UTF-8")
+        );
+
+        // then
+        actions
+                .andExpect(status().isBadRequest())
+                .andExpect(jsonPath("$.header.message").value(BAD_REQUEST.getMessage()))
+                .andDo(document(
+                        "상담 단계 변경 성공",
+                        preprocessRequest(prettyPrint()),
+                        preprocessResponse(prettyPrint()),
+                        resource(ResourceSnippetParameters.builder()
+                                .tag("Counsel API")
+                                .summary("상담 단계 변경 API")
+                                .requestHeaders(
+                                        headerWithName("Authorization").description("어세스 토큰")
+                                )
+                                .responseFields(
+                                        getCommonResponseFields(
+                                                fieldWithPath("body").type(NULL)
+                                                        .description("내용 없음")
+                                        )
+                                )
+                                .build()
+                        ))
+                );
+    }
+
+    @Test
+    @DisplayName("상담 단계 변경 실패 - 권한 없음")
+    public void counsel_step_change_fail_not_my_counsel() throws Exception {
+
+        // given
+        Long counselId = 5L;
+
+        JSONObject jsonObject = new JSONObject();
+        jsonObject.put("step", "COMPLETED");
+
+        String content = jsonObject.toString();
+
+        // when
+        ResultActions actions = mockMvc.perform(
+                patch("/api/counsels/{counselId}", counselId)
+                        .header("Authorization", "Bearer " + studentToken)
+                        .accept(APPLICATION_JSON)
+                        .contentType(APPLICATION_JSON)
+                        .content(content)
+                        .characterEncoding("UTF-8")
+        );
+
+        // then
+        actions
+                .andExpect(status().isForbidden())
+                .andExpect(jsonPath("$.header.message").value(FORBIDDEN.getMessage()))
+                .andDo(document(
+                        "상담 단계 변경 실패 - 다른 사람의 상담",
+                        preprocessRequest(prettyPrint()),
+                        preprocessResponse(prettyPrint()),
+                        resource(ResourceSnippetParameters.builder()
+                                .tag("Counsel API")
+                                .summary("상담 단계 변경 API")
+                                .requestHeaders(
+                                        headerWithName("Authorization").description("어세스 토큰")
+                                )
+                                .responseFields(
+                                        getCommonResponseFields(
+                                                fieldWithPath("body").type(NULL)
+                                                        .description("내용 없음")
+                                        )
+                                )
+                                .build()
+                        ))
+                );
+    }
+
+    @Test
+    @DisplayName("상담 단계 변경 실패 - 존재하지 않는 상담")
+    public void counsel_step_change_fail_wrong_counsel_id() throws Exception {
+
+        // given
+        Long counselId = 20005L;
+
+        JSONObject jsonObject = new JSONObject();
+        jsonObject.put("step", "COMPLETED");
+
+        String content = jsonObject.toString();
+
+        // when
+        ResultActions actions = mockMvc.perform(
+                patch("/api/counsels/{counselId}", counselId)
+                        .header("Authorization", "Bearer " + teacherToken)
+                        .accept(APPLICATION_JSON)
+                        .contentType(APPLICATION_JSON)
+                        .content(content)
+                        .characterEncoding("UTF-8")
+        );
+
+        // then
+        actions
+                .andExpect(status().isNotFound())
+                .andExpect(jsonPath("$.header.message").value(NOT_FOUND.getMessage()))
+                .andDo(document(
+                        "상담 단계 변경 실패 - 존재하지 않는 상담",
+                        preprocessRequest(prettyPrint()),
+                        preprocessResponse(prettyPrint()),
+                        resource(ResourceSnippetParameters.builder()
+                                .tag("Counsel API")
+                                .summary("상담 단계 변경 API")
+                                .requestHeaders(
+                                        headerWithName("Authorization").description("어세스 토큰")
                                 )
                                 .responseFields(
                                         getCommonResponseFields(
