@@ -42,11 +42,11 @@ public class Member extends BaseEntity {
     @Enumerated(STRING)
     private Role role;
 
-    @ManyToOne(fetch = LAZY, optional = false)
-    @JoinColumns(value = {
-            @JoinColumn(name = "school_id", nullable = false, insertable = false, updatable = false),
-            @JoinColumn(name = "level", nullable = false, insertable = false, updatable = false),
-            @JoinColumn(name = "class_number", nullable = false, insertable = false, updatable = false)
+    @ManyToOne(fetch = FetchType.LAZY, optional = false)
+    @JoinColumns({
+            @JoinColumn(name = "school_id", referencedColumnName = "school_id"),
+            @JoinColumn(name = "level", referencedColumnName = "level"),
+            @JoinColumn(name = "class_number", referencedColumnName = "classNumber")
     })
     private Classes classes;
 }

@@ -5,4 +5,6 @@ import site.chatda.domain.member.entity.Member;
 public interface CounselService {
 
     void applyCounsel(Member member);
+
+    void openCounsel(Member member, Long studentId);
 }

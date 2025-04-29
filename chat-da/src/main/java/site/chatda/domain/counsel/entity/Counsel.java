@@ -50,4 +50,8 @@ public class Counsel extends BaseEntity {
     @NotNull
     @Enumerated(STRING)
     private CounselStep step;
+
+    public void changeStep(CounselStep step) {
+        this.step = step;
+    }
 }
