@@ -3,6 +3,7 @@ package site.chatda.domain.counsel.controller;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
+import site.chatda.domain.counsel.dto.req.ChangeStepReq;
 import site.chatda.domain.counsel.dto.res.CounselListRes;
 import site.chatda.domain.counsel.service.CounselService;
 import site.chatda.domain.member.entity.Member;
@@ -38,6 +39,16 @@ public class CounselController {
         return ResponseDto.success(CREATED);
     }
 
+    @GetMapping("/students/{studentId}")
+    @PreAuthorize("hasRole('TEACHER')")
+    public ResponseDto<CounselListRes> counselList(@LoginMember Member member,
+                                                   @PathVariable("studentId") Long studentId) {
+
+        CounselListRes result = counselService.findStudentCounsels(member, studentId);
+
+        return ResponseDto.success(OK, result);
+    }
+
     @GetMapping
     @PreAuthorize("hasRole('STUDENT')")
     public ResponseDto<CounselListRes> counselList(@LoginMember Member member) {
@@ -47,13 +58,13 @@ public class CounselController {
         return ResponseDto.success(OK, result);
     }
 
-    @GetMapping("/students/{studentId}")
-    @PreAuthorize("hasRole('TEACHER')")
-    public ResponseDto<CounselListRes> counselList(@LoginMember Member member,
-                                                   @PathVariable("studentId") Long studentId) {
+    @PatchMapping("/{counselId}")
+    public ResponseDto<Void> changeStep(@LoginMember Member member,
+                                        @PathVariable("counselId") Long counselId,
+                                        @RequestBody ChangeStepReq changeStepReq) {
 
-        CounselListRes result = counselService.findStudentCounsels(member, studentId);
+        counselService.changeCounselStep(member, counselId, changeStepReq);
 
-        return ResponseDto.success(OK, result);
+        return ResponseDto.success(OK);
     }
 }
