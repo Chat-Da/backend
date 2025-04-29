@@ -2,16 +2,15 @@ package site.chatda.domain.counsel.controller;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.access.prepost.PreAuthorize;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
+import site.chatda.domain.counsel.dto.res.CounselListRes;
 import site.chatda.domain.counsel.service.CounselService;
 import site.chatda.domain.member.entity.Member;
 import site.chatda.global.argument_resolver.LoginMember;
 import site.chatda.global.dto.ResponseDto;
 
 import static site.chatda.global.statuscode.SuccessCode.CREATED;
+import static site.chatda.global.statuscode.SuccessCode.OK;
 
 @RestController
 @RequestMapping("/api/counsels")
@@ -37,5 +36,14 @@ public class CounselController {
         counselService.openCounsel(member, studentId);
 
         return ResponseDto.success(CREATED);
+    }
+
+    @GetMapping
+    @PreAuthorize("hasRole('STUDENT')")
+    public ResponseDto<CounselListRes> counselList(@LoginMember Member member) {
+
+        CounselListRes result = counselService.findCounsels(member.getId());
+
+        return ResponseDto.success(OK, result);
     }
 }

@@ -4,6 +4,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import site.chatda.domain.counsel.dto.res.CounselListRes;
 import site.chatda.domain.counsel.entity.Counsel;
 import site.chatda.domain.counsel.enums.CounselStep;
 import site.chatda.domain.counsel.repository.CounselRepository;
@@ -105,5 +106,13 @@ public class CounselServiceImpl implements CounselService {
                 .teacher(teacher)
                 .step(step)
                 .build();
+    }
+
+    @Override
+    public CounselListRes findCounsels(Long studentId) {
+
+        List<Counsel> counsels = counselRepository.findAllCounselByStudent(studentId);
+
+        return new CounselListRes(counsels);
     }
 }
