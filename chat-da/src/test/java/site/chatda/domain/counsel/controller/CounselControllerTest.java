@@ -573,7 +573,7 @@ public class CounselControllerTest {
                 .andExpect(status().isBadRequest())
                 .andExpect(jsonPath("$.header.message").value(BAD_REQUEST.getMessage()))
                 .andDo(document(
-                        "상담 단계 변경 성공",
+                        "상담 단계 변경 실패 - 잘못된 단계 입력",
                         preprocessRequest(prettyPrint()),
                         preprocessResponse(prettyPrint()),
                         resource(ResourceSnippetParameters.builder()
