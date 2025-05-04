@@ -1,4 +1,4 @@
-package site.chatda.domain.job.entity;
+package site.chatda.domain.job.entity.id;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Embeddable;
