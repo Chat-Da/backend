@@ -1,8 +1,10 @@
 package site.chatda.domain.counsel.enums;
 
+import lombok.AllArgsConstructor;
 import lombok.Getter;
 
 @Getter
+@AllArgsConstructor
 public enum CounselStep {
     REQUESTED("상담 신청중"),
     PENDING("상담 대기중"),
@@ -12,8 +14,4 @@ public enum CounselStep {
     ;
 
     private final String description;
-
-    CounselStep(String description) {
-        this.description = description;
-    }
 }

@@ -1,4 +1,5 @@
-package site.chatda.domain.job.entity;
+package site.chatda.domain.counsel.entity.id;
+
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Embeddable;
@@ -13,13 +14,11 @@ import java.io.Serializable;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-public class JobSkillId implements Serializable {
+public class StrengthId implements Serializable {
+
+    private Long counselId;
 
     @NotNull
-    @Column(columnDefinition = "SMALLINT")
-    private Integer jobId;
-
-    @NotNull
-    @Column(columnDefinition = "MEDIUMINT")
-    private Integer skillId;
+    @Column(columnDefinition = "TINYINT")
+    private Integer seq;
 }

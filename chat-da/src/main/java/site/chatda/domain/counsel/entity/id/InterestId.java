@@ -1,4 +1,5 @@
-package site.chatda.domain.school.entity;
+package site.chatda.domain.counsel.entity.id;
+
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Embeddable;
@@ -13,11 +14,11 @@ import java.io.Serializable;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-public class GradeId implements Serializable {
+public class InterestId implements Serializable {
 
-    private Integer schoolId;
+    private Long counselId;
 
     @NotNull
     @Column(columnDefinition = "TINYINT")
-    private Integer level;
+    private Integer seq;
 }

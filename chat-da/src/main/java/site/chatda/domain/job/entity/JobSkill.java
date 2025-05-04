@@ -5,6 +5,7 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import site.chatda.domain.job.entity.id.JobSkillId;
 
 import static jakarta.persistence.FetchType.LAZY;
 
