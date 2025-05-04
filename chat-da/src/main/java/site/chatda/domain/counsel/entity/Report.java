@@ -6,6 +6,9 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import site.chatda.domain.counsel.enums.SelfAwareness;
+
+import static jakarta.persistence.EnumType.STRING;
 
 @Entity
 @Getter
@@ -24,6 +27,22 @@ public class Report {
     private Counsel counsel;
 
     @NotNull
-    @Column(columnDefinition = "TEXT")
-    private String content;
+    @Column(length = 500)
+    private String personality;
+
+    @NotNull
+    @Enumerated(STRING)
+    private SelfAwareness selfAwareness;
+
+    @NotNull
+    @Column(length = 500)
+    private String selfAwarenessDescription;
+
+    @NotNull
+    @Column(length = 500)
+    private String strengthSummary;
+
+    @NotNull
+    @Column(length = 500)
+    private String weaknessSummary;
 }
