@@ -1335,6 +1335,7 @@ insert into classes(school_id, level, class_number) values
                                                         (1, 3, 3);
 
 insert into member(member_id, uuid, name, role, school_id, level, class_number, created_at, modified_at, is_deleted) values
+                                                                                                                         (100000000, 'eca58d22-f409-465b-a179-b5d527b4f687', '관리자', 'ROLE_ADMIN', 1, 1, 1, current_time, current_time, false),
                                                                                                                          (1, '5a1e826e-2a44-4fea-98b2-bb96887b9737', '선생', 'ROLE_TEACHER', 1, 3, 1, current_time, current_time, false),
                                                                                                                          (2, '78954910-7440-4241-bd9d-ca3abc44d291', '학생1', 'ROLE_STUDENT', 1, 3, 1, current_time, current_time, false),
                                                                                                                          (3, 'df83a11e-fb42-48a2-b1c7-57c767b61efc', '학생2', 'ROLE_STUDENT', 1, 3, 1, current_time, current_time, false),
