@@ -1344,8 +1344,8 @@ insert into member(member_id, uuid, name, role, school_id, level, class_number, 
                                                                                                                          (10002, '94faed17-2889-419f-bdb4-2d4c00ce5fda', '다른 반 학생', 'ROLE_STUDENT', 1, 3, 2, current_time, current_time, false);
 
 insert into teacher(member_id) values
-    (1),
-    (10001);
+                                   (1),
+                                   (10001);
 
 insert into student(member_id, student_number, src) values
                                                         (2, 1, 'image'),
@@ -1354,8 +1354,9 @@ insert into student(member_id, student_number, src) values
                                                         (10002, 1, 'image');
 
 insert into counsel(counsel_id, school_id, level, student_id, teacher_id, step, is_deleted, created_at, modified_at) values
-                                                                                    (1, 1, 1, 2, 10001, 'COMPLETED', false, '2023-03-05 00:00:00', '2023-03-06 00:00:00'),
-                                                                                    (2, 1, 1, 2, 10001, 'COMPLETED', false, '2023-09-06 00:00:00', '2023-09-07 00:00:00'),
-                                                                                    (3, 1, 2, 2, 1, 'COMPLETED', false, '2024-03-11 00:00:00', '2024-03-12 00:00:00'),
-                                                                                    (4, 1, 2, 2, 1, 'COMPLETED', false, '2024-09-03 00:00:00', '2024-09-05 00:00:00'),
-                                                                                    (5, 1, 3, 3, 1, 'IN_PROGRESS', false, current_time, current_time);
+                                                                                                                         (1, 1, 1, 2, 10001, 'COMPLETED', false, '2023-03-05 00:00:00', '2023-03-06 00:00:00'),
+                                                                                                                         (2, 1, 1, 2, 10001, 'COMPLETED', false, '2023-09-06 00:00:00', '2023-09-07 00:00:00'),
+                                                                                                                         (3, 1, 2, 2, 1, 'COMPLETED', false, '2024-03-11 00:00:00', '2024-03-12 00:00:00'),
+                                                                                                                         (4, 1, 2, 2, 1, 'COMPLETED', false, '2024-09-03 00:00:00', '2024-09-05 00:00:00'),
+                                                                                                                         (5, 1, 3, 3, 1, 'PENDING', false, current_time, current_time),
+                                                                                                                         (6, 1, 3, 4, 1, 'IN_PROGRESS', false, current_time, current_time);

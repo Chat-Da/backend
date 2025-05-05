@@ -1358,4 +1358,5 @@ insert into counsel(counsel_id, school_id, level, student_id, teacher_id, step, 
                                                                                                                          (2, 1, 1, 2, 10001, 'COMPLETED', false, '2023-09-06 00:00:00', '2023-09-07 00:00:00'),
                                                                                                                          (3, 1, 2, 2, 1, 'COMPLETED', false, '2024-03-11 00:00:00', '2024-03-12 00:00:00'),
                                                                                                                          (4, 1, 2, 2, 1, 'COMPLETED', false, '2024-09-03 00:00:00', '2024-09-05 00:00:00'),
-                                                                                                                         (5, 1, 3, 3, 1, 'IN_PROGRESS', false, current_time, current_time);
+                                                                                                                         (5, 1, 3, 3, 1, 'RESULT_WAITING', false, current_time, current_time),
+                                                                                                                         (6, 1, 3, 4, 1, 'IN_PROGRESS', false, current_time, current_time);
