@@ -1,9 +1,11 @@
 package site.chatda.domain.counsel.controller;
 
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 import site.chatda.domain.counsel.dto.req.ChangeStepReq;
+import site.chatda.domain.counsel.dto.req.CreateReportReq;
 import site.chatda.domain.counsel.dto.res.CounselListRes;
 import site.chatda.domain.counsel.service.CounselService;
 import site.chatda.domain.member.entity.Member;
@@ -66,5 +68,15 @@ public class CounselController {
         counselService.changeCounselStep(member, counselId, changeStepReq);
 
         return ResponseDto.success(OK);
+    }
+
+    @PostMapping("{counselId}/reports")
+    @PreAuthorize("hasRole('ADMIN')")
+    public ResponseDto<Void> createReport(@PathVariable("counselId") Long counselId,
+                                          @RequestBody @Valid CreateReportReq createReportReq) {
+
+        counselService.createReport(counselId, createReportReq);
+
+        return ResponseDto.success(CREATED);
     }
 }
