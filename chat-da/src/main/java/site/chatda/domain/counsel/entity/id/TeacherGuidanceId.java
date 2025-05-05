@@ -14,7 +14,7 @@ import java.io.Serializable;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-public class GrowthGuidanceId implements Serializable {
+public class TeacherGuidanceId implements Serializable {
 
     private Long counselId;
 

@@ -61,7 +61,7 @@ public class BatchRepository {
                 (PreparedStatement ps, GrowthSuggestion growthSuggestion) -> {
                     ps.setString(1, String.valueOf(growthSuggestion.getId().getSeq()));
                     ps.setString(2, String.valueOf(growthSuggestion.getId().getCounselId()));
-                    ps.setString(3, growthSuggestion.getDescription());
+                    ps.setString(3, growthSuggestion.getContent());
                 });
     }
 

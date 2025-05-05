@@ -1,26 +1,29 @@
 package site.chatda.domain.counsel.entity;
 
-import jakarta.persistence.Column;
-import jakarta.persistence.EmbeddedId;
-import jakarta.persistence.Entity;
+import jakarta.persistence.*;
 import jakarta.validation.constraints.NotNull;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
-import site.chatda.domain.counsel.entity.id.GrowthGuidanceId;
+import site.chatda.domain.counsel.entity.id.TeacherGuidanceId;
 
 @Entity
 @Getter
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
-public class GrowthGuidance {
+public class TeacherGuidance {
 
     @EmbeddedId
-    private GrowthGuidanceId id;
+    private TeacherGuidanceId id;
+
+    @ManyToOne
+    @MapsId("counselId")
+    @JoinColumn(name = "counsel_id", columnDefinition = "INT UNSIGNED")
+    private Report report;
 
     @NotNull
     @Column(length = 200)
-    private String description;
+    private String content;
 }
