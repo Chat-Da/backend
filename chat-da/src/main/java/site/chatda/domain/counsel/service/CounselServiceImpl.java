@@ -8,10 +8,7 @@ import site.chatda.domain.counsel.dto.req.ChangeStepReq;
 import site.chatda.domain.counsel.dto.req.CreateReportReq;
 import site.chatda.domain.counsel.dto.res.CounselListRes;
 import site.chatda.domain.counsel.entity.*;
-import site.chatda.domain.counsel.entity.id.InterestId;
-import site.chatda.domain.counsel.entity.id.JobRecommendationId;
-import site.chatda.domain.counsel.entity.id.StrengthId;
-import site.chatda.domain.counsel.entity.id.WeaknessId;
+import site.chatda.domain.counsel.entity.id.*;
 import site.chatda.domain.counsel.enums.CounselStep;
 import site.chatda.domain.counsel.repository.BatchRepository;
 import site.chatda.domain.counsel.repository.CounselRepository;
@@ -227,6 +224,7 @@ public class CounselServiceImpl implements CounselService {
         createStrengths(report, createReportReq.getStrengths());
         createWeaknesses(report, createReportReq.getWeaknesses());
         createInterest(report, createReportReq.getInterests());
+        createGrowthSuggestions(report, createReportReq.getGrowthSuggestions());
     }
 
     private void createJobRecommendations(Report report, CreateReportReq createReportReq) {
@@ -328,5 +326,21 @@ public class CounselServiceImpl implements CounselService {
         }
 
         batchRepository.saveInterest(interests);
+    }
+
+    private void createGrowthSuggestions(Report report, List<String> growthSuggestionContents) {
+
+        List<GrowthSuggestion> growthSuggestions = new ArrayList<>();
+
+        for (int i = 0; i < growthSuggestionContents.size(); i++) {
+            growthSuggestions.add(
+                    GrowthSuggestion.builder()
+                            .id(new GrowthSuggestionId(report.getId(), i + 1))
+                            .content(growthSuggestionContents.get(i))
+                            .build()
+            );
+        }
+
+        batchRepository.saveGrowthSuggestions(growthSuggestions);
     }
 }
