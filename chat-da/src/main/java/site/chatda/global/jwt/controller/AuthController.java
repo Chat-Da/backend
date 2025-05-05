@@ -40,4 +40,16 @@ public class AuthController {
 
         return ResponseDto.success(OK);
     }
+
+    @PostMapping("/login/admin")
+    public ResponseDto<Void> loginAdmin(HttpServletResponse response) {
+
+        String uuid = "eca58d22-f409-465b-a179-b5d527b4f687";
+
+        String token = jwtUtils.createToken(uuid);
+
+        response.setHeader("Authorization", token);
+
+        return ResponseDto.success(OK);
+    }
 }

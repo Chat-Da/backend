@@ -1,6 +1,7 @@
 package site.chatda.domain.counsel.service;
 
 import site.chatda.domain.counsel.dto.req.ChangeStepReq;
+import site.chatda.domain.counsel.dto.req.CreateReportReq;
 import site.chatda.domain.counsel.dto.res.CounselListRes;
 import site.chatda.domain.member.entity.Member;
 
@@ -15,4 +16,6 @@ public interface CounselService {
     CounselListRes findCounsels(Long studentId);
 
     void changeCounselStep(Member member, Long counselId, ChangeStepReq changeStepReq);
+
+    void createReport(Long counselId, CreateReportReq createReportReq);
 }

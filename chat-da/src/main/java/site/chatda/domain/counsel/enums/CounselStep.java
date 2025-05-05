@@ -2,6 +2,9 @@ package site.chatda.domain.counsel.enums;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
+import site.chatda.global.exception.CustomException;
+
+import static site.chatda.global.statuscode.ErrorCode.BAD_REQUEST;
 
 @Getter
 @AllArgsConstructor
@@ -14,4 +17,15 @@ public enum CounselStep {
     ;
 
     private final String description;
+
+    public static CounselStep getByName(String name) {
+
+        for (CounselStep step : CounselStep.values()) {
+            if (step.name().equalsIgnoreCase(name)) {
+                return step;
+            }
+        }
+
+        throw new CustomException(BAD_REQUEST);
+    }
 }

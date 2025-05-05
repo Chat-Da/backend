@@ -3,7 +3,6 @@ package site.chatda.domain.member.service;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import org.yaml.snakeyaml.util.EnumUtils;
 import site.chatda.domain.counsel.enums.CounselStep;
 import site.chatda.domain.member.dto.CounselStepDto;
 import site.chatda.domain.member.dto.StudentDto;
@@ -20,7 +19,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
 
-import static site.chatda.global.statuscode.ErrorCode.BAD_REQUEST;
+import static site.chatda.domain.counsel.enums.CounselStep.getByName;
 import static site.chatda.global.statuscode.ErrorCode.NOT_FOUND;
 
 @Service
@@ -55,7 +54,7 @@ public class MemberServiceImpl implements MemberService {
         setCounselStep(result);
 
         if (counselStep != null) {
-            CounselStep step = validateCounselStep(counselStep);
+            CounselStep step = getByName(counselStep);
 
             result.setStudents(
                     result.getStudents().stream()
@@ -65,15 +64,6 @@ public class MemberServiceImpl implements MemberService {
         }
 
         return result;
-    }
-
-    private CounselStep validateCounselStep(String counselStep) {
-
-        try {
-            return EnumUtils.findEnumInsensitiveCase(CounselStep.class, counselStep.toUpperCase());
-        } catch (IllegalArgumentException e) {
-            throw new CustomException(BAD_REQUEST);
-        }
     }
 
     private void setCounselStep(StudentListRes result) {
