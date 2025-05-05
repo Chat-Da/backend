@@ -34,4 +34,8 @@ public class JobRecommendation {
     @NotBlank
     @Column(length = 300)
     private String reason;
+
+    @NotBlank
+    @Column(length = 500)
+    private String growthSuggestions;
 }
