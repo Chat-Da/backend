@@ -221,6 +221,7 @@ public class CounselServiceImpl implements CounselService {
         Report report = createReportReq.toReport(counsel);
 
         reportRepository.save(report);
+        reportRepository.flush();
 
         createJobRecommendations(report, createReportReq);
         createStrengths(report, createReportReq.getStrengths());
