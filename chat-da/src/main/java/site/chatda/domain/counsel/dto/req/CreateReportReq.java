@@ -43,7 +43,7 @@ public class CreateReportReq {
     private List<Integer> jobSuggestions;
 
     @Size(min = 1, max = 3)
-    private List<String> jobSuggestionsReasons;
+    private List<String> jobSuggestionReasons;
 
     @Size(min = 1, max = 3)
     private List<String> jobGrowthSuggestions;
@@ -53,7 +53,7 @@ public class CreateReportReq {
         return Report.builder()
                 .counsel(counsel)
                 .personality(personality)
-                .selfAwareness(SelfAwareness.getByLevel(selfAwareness))
+                .selfAwareness(SelfAwareness.getByName(selfAwareness))
                 .selfAwarenessDescription(selfAwarenessDescription)
                 .strengthSummary(strengthSummary)
                 .weaknessSummary(weaknessSummary)

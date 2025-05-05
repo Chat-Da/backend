@@ -159,7 +159,7 @@ public class CounselServiceImpl implements CounselService {
 
         checkMyCounsel(member, counsel);
 
-        CounselStep counselStep = getByDescription(changeStepReq.getStep());
+        CounselStep counselStep = getByName(changeStepReq.getStep());
 
         validateCounselStep(member.getRole(), counsel, counselStep);
 
@@ -197,36 +197,41 @@ public class CounselServiceImpl implements CounselService {
     }
 
     @Override
+    @Transactional
     public void createReport(Long counselId, CreateReportReq createReportReq) {
 
         Counsel counsel = counselRepository.findCounselWithStudentAndTeacher(counselId)
                 .orElseThrow(() -> new CustomException(NOT_FOUND));
 
+        if (counsel.getStep() != IN_PROGRESS) {
+            throw new CustomException(BAD_REQUEST);
+        }
+
         if (reportRepository.existsById(counselId)) {
             throw new CustomException(REPORT_ALREADY_EXISTS);
         }
 
-        Report report = createNewReport(counsel, createReportReq);
+        createNewReport(counsel, createReportReq);
 
-        reportRepository.save(report);
+        counsel.changeStep(RESULT_WAITING);
     }
 
-    private Report createNewReport(Counsel counsel, CreateReportReq createReportReq) {
+    private void createNewReport(Counsel counsel, CreateReportReq createReportReq) {
 
         Report report = createReportReq.toReport(counsel);
+
+        reportRepository.save(report);
 
         createJobRecommendations(report, createReportReq);
         createStrengths(report, createReportReq.getStrengths());
         createWeaknesses(report, createReportReq.getWeaknesses());
         createInterest(report, createReportReq.getInterests());
-
-        return report;
     }
 
     private void createJobRecommendations(Report report, CreateReportReq createReportReq) {
 
         List<Integer> jobSuggestions = createReportReq.getJobSuggestions();
-        List<String> jobSuggestionsReasons = createReportReq.getJobSuggestionsReasons();
+        List<String> jobSuggestionsReasons = createReportReq.getJobSuggestionReasons();
         List<String> jobGrowthSuggestions = createReportReq.getJobGrowthSuggestions();
         List<Job> jobs = jobRepository.findAllById(jobSuggestions);
 

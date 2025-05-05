@@ -19,7 +19,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
 
-import static site.chatda.domain.counsel.enums.CounselStep.getByDescription;
+import static site.chatda.domain.counsel.enums.CounselStep.getByName;
 import static site.chatda.global.statuscode.ErrorCode.NOT_FOUND;
 
 @Service
@@ -54,7 +54,7 @@ public class MemberServiceImpl implements MemberService {
         setCounselStep(result);
 
         if (counselStep != null) {
-            CounselStep step = getByDescription(counselStep);
+            CounselStep step = getByName(counselStep);
 
             result.setStudents(
                     result.getStudents().stream()

@@ -22,7 +22,7 @@ public class Report {
     private Long id;
 
     @OneToOne
-    @MapsId("memberId")
+    @MapsId
     @JoinColumn(name = "counsel_id")
     private Counsel counsel;
 

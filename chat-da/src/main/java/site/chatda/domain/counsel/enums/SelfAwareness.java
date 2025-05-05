@@ -16,10 +16,10 @@ public enum SelfAwareness {
 
     private final String level;
 
-    public static SelfAwareness getByLevel(String description) {
+    public static SelfAwareness getByName(String name) {
 
         for (SelfAwareness level : SelfAwareness.values()) {
-            if (description.equals(level.getLevel())) {
+            if (level.name().equalsIgnoreCase(name)) {
                 return level;
             }
         }

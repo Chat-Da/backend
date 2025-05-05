@@ -18,10 +18,10 @@ public enum CounselStep {
 
     private final String description;
 
-    public static CounselStep getByDescription(String description) {
+    public static CounselStep getByName(String name) {
 
         for (CounselStep step : CounselStep.values()) {
-            if (step.getDescription().equals(description)) {
+            if (step.name().equalsIgnoreCase(name)) {
                 return step;
             }
         }
