@@ -805,11 +805,76 @@ public class CounselControllerTest {
                                         getCommonResponseFields(
                                                 fieldWithPath("body").type(NULL)
                                                         .description("내용 없음")
-
                                         )
                                 )
-                                .requestSchema(Schema.schema("상담 생성 Request"))
-                                .responseSchema(Schema.schema("상담 생성 Response"))
+                                .requestSchema(Schema.schema("보고서 생성 Request"))
+                                .responseSchema(Schema.schema("보고서       jsonObject.put("jobGrowthSuggestions", new JSONArray(List.of(
+                "1. 다양한 브랜드 캠페인을 분석하며 기획 아이디어를 떠올려보세요.  2. 사람들의 소비 트렌드를 관심 있게 관찰해보세요.  3. 친구들과 팀을 이루어 작은 프로젝트를 기획하고 실행해보세요.",
+                "1. 다양한 콘텐츠(영상, 글, 카드뉴스)를 분석하며 좋은 포인트를 기록해보세요.  2. 관심 있는 주제로 직접 짧은 콘텐츠를 기획하고 만들어보세요.  3. 다른 사람의 피드백을 받아 콘텐츠를 개선하는 연습을 해보세요."
+        )));
+
+        String content = jsonObject.toString();
+
+        // when
+        ResultActions actions = mockMvc.perform(
+                post("/api/counsels/{counselId}/reports", counselId)
+                        .header("Authorization", "Bearer " + adminToken)
+                        .accept(APPLICATION_JSON)
+                        .contentType(APPLICATION_JSON)
+                        .content(content)
+                        .characterEncoding("UTF-8")
+        );
+
+        // then
+        actions
+                .andExpect(status().isCreated())
+                .andExpect(jsonPath("$.header.message").value(CREATED.getMessage()))
+                .andDo(document(
+                        "보고서 생성 성공",
+                        preprocessRequest(prettyPrint()),
+                        preprocessResponse(prettyPrint()),
+                        resource(ResourceSnippetParameters.builder()
+                                .tag("Counsel API")
+                                .summary("보고서 생성 API")
+                                .requestHeaders(
+                                        headerWithName("Authorization").description("어드민 어세스 토큰")
+                                )
+                                .requestFields(
+                                        List.of(
+                                                fieldWithPath("personality").type(STRING)
+                                                        .description("성향 요약 (500자 이내)"),
+                                                fieldWithPath("selfAwareness").type(STRING)
+                                                        .description("자기 이해도 (LOW, MIDDLE, HIGH 중 하나)"),
+                                                fieldWithPath("selfAwarenessDescription").type(STRING)
+                                                        .description("자기 이해도 설명 (500자 이내)"),
+                                                fieldWithPath("strengthSummary").type(STRING)
+                                                        .description("강점 요약 (500자 이내)"),
+                                                fieldWithPath("weaknessSummary").type(STRING)
+                                                        .description("약점 요약 (500자 이내)"),
+                                                fieldWithPath("strengths").type(ARRAY)
+                                                        .description("강점 리스트"),
+                                                fieldWithPath("weaknesses").type(ARRAY)
+                                                        .description("약점 리스트"),
+                                                fieldWithPath("interests").type(ARRAY)
+                                                        .description("흥미 리스트"),
+                                                fieldWithPath("growthSuggestions").type(ARRAY)
+                                                        .description("성장 제안"),
+                                                fieldWithPath("jobSuggestions").type(ARRAY)
+                                                        .description("직업 추천 (직업 아이디 리스트)"),
+                                                fieldWithPath("jobSuggestionReasons").type(ARRAY)
+                                                        .description("직업 추천 이유"),
+                                                fieldWithPath("jobGrowthSuggestions").type(ARRAY)
+                                                        .description("직업별 성장 제안")
+                                        )
+                                )
+                                .responseFields(
+                                        getCommonResponseFields(
+                                                fieldWithPath("body").type(NULL)
+                                                        .description("내용 없음")
+                                        )
+                                )
+                                .requestSchema(Schema.schema("보고서 생성 Request"))
+                                .responseSchema(Schema.schema("보고서 생성 Response"))
                                 .build()
                         ))
                 );
@@ -877,7 +942,6 @@ public class CounselControllerTest {
                                         getCommonResponseFields(
                                                 fieldWithPath("body").type(NULL)
                                                         .description("내용 없음")
-
                                         )
                                 )
                                 .build()
@@ -947,7 +1011,6 @@ public class CounselControllerTest {
                                         getCommonResponseFields(
                                                 fieldWithPath("body").type(NULL)
                                                         .description("내용 없음")
-
                                         )
                                 )
                                 .build()
