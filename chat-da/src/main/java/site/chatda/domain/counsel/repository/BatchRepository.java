@@ -53,7 +53,7 @@ public class BatchRepository {
     }
 
     public void saveGrowthSuggestions(List<GrowthSuggestion> growthSuggestions){
-        String sql = "insert into growth_suggestion(seq, counsel_id, description) values (?, ?, ?)";
+        String sql = "insert into growth_suggestion(seq, counsel_id, content) values (?, ?, ?)";
 
         jdbcTemplate.batchUpdate(sql,
                 growthSuggestions,
@@ -61,7 +61,7 @@ public class BatchRepository {
                 (PreparedStatement ps, GrowthSuggestion growthSuggestion) -> {
                     ps.setString(1, String.valueOf(growthSuggestion.getId().getSeq()));
                     ps.setString(2, String.valueOf(growthSuggestion.getId().getCounselId()));
-                    ps.setString(3, growthSuggestion.getDescription());
+                    ps.setString(3, growthSuggestion.getContent());
                 });
     }
 

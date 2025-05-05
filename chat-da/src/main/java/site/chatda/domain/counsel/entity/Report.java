@@ -23,7 +23,7 @@ public class Report {
 
     @OneToOne
     @MapsId
-    @JoinColumn(name = "counsel_id")
+    @JoinColumn(name = "counsel_id", columnDefinition = "INT UNSIGNED")
     private Counsel counsel;
 
     @NotNull

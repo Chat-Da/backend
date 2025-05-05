@@ -1,8 +1,6 @@
 package site.chatda.domain.counsel.entity;
 
-import jakarta.persistence.Column;
-import jakarta.persistence.EmbeddedId;
-import jakarta.persistence.Entity;
+import jakarta.persistence.*;
 import jakarta.validation.constraints.NotNull;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -20,7 +18,12 @@ public class GrowthSuggestion {
     @EmbeddedId
     private GrowthSuggestionId id;
 
+    @ManyToOne
+    @MapsId("counselId")
+    @JoinColumn(name = "counsel_id", columnDefinition = "INT UNSIGNED")
+    private Report report;
+
     @NotNull
     @Column(length = 200)
-    private String description;
+    private String content;
 }

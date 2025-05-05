@@ -1,29 +1,29 @@
 package site.chatda.domain.counsel.entity;
 
 import jakarta.persistence.*;
-import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.NotBlank;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
-import site.chatda.domain.counsel.entity.id.WeaknessId;
 
 @Entity
 @Getter
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
-public class Weakness {
+ class TeacherJobSuggestion {
 
-    @EmbeddedId
-    private WeaknessId id;
+    @Id
+    @Column(name = "counsel_id", columnDefinition = "INT UNSIGNED")
+    private Long id;
 
     @ManyToOne
-    @MapsId("counselId")
+    @MapsId
     @JoinColumn(name = "counsel_id", columnDefinition = "INT UNSIGNED")
     private Report report;
 
-    @NotNull
-    @Column(length = 30)
-    private String description;
+    @NotBlank
+    @Column(length = 500)
+    private String content;
 }

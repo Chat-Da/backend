@@ -15,11 +15,7 @@ import java.io.Serializable;
 @AllArgsConstructor
 public class JobRecommendationId implements Serializable {
 
-    @NotNull
-    @Column(columnDefinition = "SMALLINT")
     private Integer jobId;
 
-    @NotNull
-    @Column(columnDefinition = "INT UNSIGNED")
     private Long counselId;
 }
