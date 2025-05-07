@@ -21,6 +21,7 @@ import site.chatda.global.jwt.JwtUtils;
 import java.util.List;
 
 import static com.epages.restdocs.apispec.MockMvcRestDocumentationWrapper.document;
+import static com.epages.restdocs.apispec.ResourceDocumentation.parameterWithName;
 import static com.epages.restdocs.apispec.ResourceDocumentation.resource;
 import static com.fasterxml.jackson.databind.jsonFormatVisitors.JsonFormatTypes.*;
 import static org.springframework.http.MediaType.APPLICATION_JSON;
@@ -95,7 +96,6 @@ public class CounselControllerTest {
                                         getCommonResponseFields(
                                                 fieldWithPath("body").type(NULL)
                                                         .description("내용 없음")
-
                                         )
                                 )
                                 .requestSchema(Schema.schema("학생 상담 신청 Request"))
@@ -144,7 +144,6 @@ public class CounselControllerTest {
                                         getCommonResponseFields(
                                                 fieldWithPath("body").type(NULL)
                                                         .description("내용 없음")
-
                                         )
                                 )
                                 .build()
@@ -178,6 +177,12 @@ public class CounselControllerTest {
                         resource(ResourceSnippetParameters.builder()
                                 .tag("Counsel API")
                                 .summary("상담 생성 API")
+                                .pathParameters(
+                                        List.of(
+                                                parameterWithName("studentId")
+                                                        .description("학생 아이디")
+                                        )
+                                )
                                 .requestHeaders(
                                         headerWithName("Authorization").description("교사 어세스 토큰")
                                 )
@@ -185,7 +190,6 @@ public class CounselControllerTest {
                                         getCommonResponseFields(
                                                 fieldWithPath("body").type(NULL)
                                                         .description("내용 없음")
-
                                         )
                                 )
                                 .requestSchema(Schema.schema("상담 생성 Request"))
@@ -221,6 +225,12 @@ public class CounselControllerTest {
                         resource(ResourceSnippetParameters.builder()
                                 .tag("Counsel API")
                                 .summary("상담 생성 API")
+                                .pathParameters(
+                                        List.of(
+                                                parameterWithName("studentId")
+                                                        .description("학생 아이디")
+                                        )
+                                )
                                 .requestHeaders(
                                         headerWithName("Authorization").description("교사 어세스 토큰")
                                 )
@@ -228,7 +238,6 @@ public class CounselControllerTest {
                                         getCommonResponseFields(
                                                 fieldWithPath("body").type(NULL)
                                                         .description("내용 없음")
-
                                         )
                                 )
                                 .build()
@@ -262,6 +271,12 @@ public class CounselControllerTest {
                         resource(ResourceSnippetParameters.builder()
                                 .tag("Counsel API")
                                 .summary("상담 생성 API")
+                                .pathParameters(
+                                        List.of(
+                                                parameterWithName("studentId")
+                                                        .description("학생 아이디")
+                                        )
+                                )
                                 .requestHeaders(
                                         headerWithName("Authorization").description("교사 어세스 토큰")
                                 )
@@ -269,7 +284,6 @@ public class CounselControllerTest {
                                         getCommonResponseFields(
                                                 fieldWithPath("body").type(NULL)
                                                         .description("내용 없음")
-
                                         )
                                 )
                                 .build()
@@ -303,6 +317,12 @@ public class CounselControllerTest {
                         resource(ResourceSnippetParameters.builder()
                                 .tag("Counsel API")
                                 .summary("상담 생성 API")
+                                .pathParameters(
+                                        List.of(
+                                                parameterWithName("studentId")
+                                                        .description("학생 아이디")
+                                        )
+                                )
                                 .requestHeaders(
                                         headerWithName("Authorization").description("교사 어세스 토큰")
                                 )
@@ -310,7 +330,6 @@ public class CounselControllerTest {
                                         getCommonResponseFields(
                                                 fieldWithPath("body").type(NULL)
                                                         .description("내용 없음")
-
                                         )
                                 )
                                 .build()
@@ -395,6 +414,12 @@ public class CounselControllerTest {
                         resource(ResourceSnippetParameters.builder()
                                 .tag("Counsel API")
                                 .summary("담당 학생 상담 내역 조회 API")
+                                .pathParameters(
+                                        List.of(
+                                                parameterWithName("studentId")
+                                                        .description("학생 아이디")
+                                        )
+                                )
                                 .requestHeaders(
                                         headerWithName("Authorization").description("교사 어세스 토큰")
                                 )
@@ -447,6 +472,12 @@ public class CounselControllerTest {
                         resource(ResourceSnippetParameters.builder()
                                 .tag("Counsel API")
                                 .summary("담당 학생 상담 내역 조회 API")
+                                .pathParameters(
+                                        List.of(
+                                                parameterWithName("studentId")
+                                                        .description("학생 아이디")
+                                        )
+                                )
                                 .requestHeaders(
                                         headerWithName("Authorization").description("교사 어세스 토큰")
                                 )
@@ -487,6 +518,12 @@ public class CounselControllerTest {
                         resource(ResourceSnippetParameters.builder()
                                 .tag("Counsel API")
                                 .summary("담당 학생 상담 내역 조회 API")
+                                .pathParameters(
+                                        List.of(
+                                                parameterWithName("studentId")
+                                                        .description("학생 아이디")
+                                        )
+                                )
                                 .requestHeaders(
                                         headerWithName("Authorization").description("교사 어세스 토큰")
                                 )
@@ -534,6 +571,12 @@ public class CounselControllerTest {
                         resource(ResourceSnippetParameters.builder()
                                 .tag("Counsel API")
                                 .summary("상담 단계 변경 API")
+                                .pathParameters(
+                                        List.of(
+                                                parameterWithName("counselId")
+                                                        .description("상담 아이디")
+                                        )
+                                )
                                 .requestHeaders(
                                         headerWithName("Authorization").description("어세스 토큰")
                                 )
@@ -589,6 +632,12 @@ public class CounselControllerTest {
                         resource(ResourceSnippetParameters.builder()
                                 .tag("Counsel API")
                                 .summary("상담 단계 변경 API")
+                                .pathParameters(
+                                        List.of(
+                                                parameterWithName("counselId")
+                                                        .description("상담 아이디")
+                                        )
+                                )
                                 .requestHeaders(
                                         headerWithName("Authorization").description("어세스 토큰")
                                 )
@@ -642,6 +691,12 @@ public class CounselControllerTest {
                         resource(ResourceSnippetParameters.builder()
                                 .tag("Counsel API")
                                 .summary("상담 단계 변경 API")
+                                .pathParameters(
+                                        List.of(
+                                                parameterWithName("counselId")
+                                                        .description("상담 아이디")
+                                        )
+                                )
                                 .requestHeaders(
                                         headerWithName("Authorization").description("어세스 토큰")
                                 )
@@ -695,6 +750,12 @@ public class CounselControllerTest {
                         resource(ResourceSnippetParameters.builder()
                                 .tag("Counsel API")
                                 .summary("상담 단계 변경 API")
+                                .pathParameters(
+                                        List.of(
+                                                parameterWithName("counselId")
+                                                        .description("상담 아이디")
+                                        )
+                                )
                                 .requestHeaders(
                                         headerWithName("Authorization").description("어세스 토큰")
                                 )
@@ -770,6 +831,12 @@ public class CounselControllerTest {
                         resource(ResourceSnippetParameters.builder()
                                 .tag("Counsel API")
                                 .summary("보고서 생성 API")
+                                .pathParameters(
+                                        List.of(
+                                                parameterWithName("counselId")
+                                                        .description("상담 아이디")
+                                        )
+                                )
                                 .requestHeaders(
                                         headerWithName("Authorization").description("어드민 어세스 토큰")
                                 )
@@ -869,6 +936,12 @@ public class CounselControllerTest {
                         resource(ResourceSnippetParameters.builder()
                                 .tag("Counsel API")
                                 .summary("보고서 생성 API")
+                                .pathParameters(
+                                        List.of(
+                                                parameterWithName("counselId")
+                                                        .description("상담 아이디")
+                                        )
+                                )
                                 .requestHeaders(
                                         headerWithName("Authorization").description("어드민 어세스 토큰")
                                 )
@@ -938,6 +1011,12 @@ public class CounselControllerTest {
                         resource(ResourceSnippetParameters.builder()
                                 .tag("Counsel API")
                                 .summary("보고서 생성 API")
+                                .pathParameters(
+                                        List.of(
+                                                parameterWithName("counselId")
+                                                        .description("상담 아이디")
+                                        )
+                                )
                                 .requestHeaders(
                                         headerWithName("Authorization").description("어드민 어세스 토큰")
                                 )
@@ -986,6 +1065,12 @@ public class CounselControllerTest {
                         resource(ResourceSnippetParameters.builder()
                                 .tag("Counsel API")
                                 .summary("담당 교사 한마디 추가 API")
+                                .pathParameters(
+                                        List.of(
+                                                parameterWithName("counselId")
+                                                        .description("상담 아이디")
+                                        )
+                                )
                                 .requestHeaders(
                                         headerWithName("Authorization").description("교사 어세스 토큰")
                                 )
@@ -1042,6 +1127,12 @@ public class CounselControllerTest {
                         resource(ResourceSnippetParameters.builder()
                                 .tag("Counsel API")
                                 .summary("담당 교사 한마디 추가 API")
+                                .pathParameters(
+                                        List.of(
+                                                parameterWithName("counselId")
+                                                        .description("상담 아이디")
+                                        )
+                                )
                                 .requestHeaders(
                                         headerWithName("Authorization").description("교사 어세스 토큰")
                                 )
@@ -1096,6 +1187,12 @@ public class CounselControllerTest {
                         resource(ResourceSnippetParameters.builder()
                                 .tag("Counsel API")
                                 .summary("담당 교사 한마디 추가 API")
+                                .pathParameters(
+                                        List.of(
+                                                parameterWithName("counselId")
+                                                        .description("상담 아이디")
+                                        )
+                                )
                                 .requestHeaders(
                                         headerWithName("Authorization").description("교사 어세스 토큰")
                                 )
@@ -1150,6 +1247,12 @@ public class CounselControllerTest {
                         resource(ResourceSnippetParameters.builder()
                                 .tag("Counsel API")
                                 .summary("담당 교사 한마디 추가 API")
+                                .pathParameters(
+                                        List.of(
+                                                parameterWithName("counselId")
+                                                        .description("상담 아이디")
+                                        )
+                                )
                                 .requestHeaders(
                                         headerWithName("Authorization").description("교사 어세스 토큰")
                                 )
@@ -1204,6 +1307,12 @@ public class CounselControllerTest {
                         resource(ResourceSnippetParameters.builder()
                                 .tag("Counsel API")
                                 .summary("담당 교사 직업 추천 추가 API")
+                                .pathParameters(
+                                        List.of(
+                                                parameterWithName("counselId")
+                                                        .description("상담 아이디")
+                                        )
+                                )
                                 .requestHeaders(
                                         headerWithName("Authorization").description("교사 어세스 토큰")
                                 )
@@ -1260,6 +1369,12 @@ public class CounselControllerTest {
                         resource(ResourceSnippetParameters.builder()
                                 .tag("Counsel API")
                                 .summary("담당 교사 직업 추천 추가 API")
+                                .pathParameters(
+                                        List.of(
+                                                parameterWithName("counselId")
+                                                        .description("상담 아이디")
+                                        )
+                                )
                                 .requestHeaders(
                                         headerWithName("Authorization").description("교사 어세스 토큰")
                                 )
@@ -1314,6 +1429,12 @@ public class CounselControllerTest {
                         resource(ResourceSnippetParameters.builder()
                                 .tag("Counsel API")
                                 .summary("담당 교사 직업 추천 추가 API")
+                                .pathParameters(
+                                        List.of(
+                                                parameterWithName("counselId")
+                                                        .description("상담 아이디")
+                                        )
+                                )
                                 .requestHeaders(
                                         headerWithName("Authorization").description("교사 어세스 토큰")
                                 )
@@ -1368,6 +1489,12 @@ public class CounselControllerTest {
                         resource(ResourceSnippetParameters.builder()
                                 .tag("Counsel API")
                                 .summary("담당 교사 직업 추천 추가 API")
+                                .pathParameters(
+                                        List.of(
+                                                parameterWithName("counselId")
+                                                        .description("상담 아이디")
+                                        )
+                                )
                                 .requestHeaders(
                                         headerWithName("Authorization").description("교사 어세스 토큰")
                                 )
