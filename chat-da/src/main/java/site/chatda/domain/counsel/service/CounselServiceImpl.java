@@ -7,14 +7,12 @@ import org.springframework.transaction.annotation.Transactional;
 import site.chatda.domain.counsel.dto.req.ChangeStepReq;
 import site.chatda.domain.counsel.dto.req.CreateReportReq;
 import site.chatda.domain.counsel.dto.req.SaveTeacherCommentReq;
+import site.chatda.domain.counsel.dto.req.SaveTeacherJobSuggestionReq;
 import site.chatda.domain.counsel.dto.res.CounselListRes;
 import site.chatda.domain.counsel.entity.*;
 import site.chatda.domain.counsel.entity.id.*;
 import site.chatda.domain.counsel.enums.CounselStep;
-import site.chatda.domain.counsel.repository.BatchRepository;
-import site.chatda.domain.counsel.repository.CounselRepository;
-import site.chatda.domain.counsel.repository.ReportRepository;
-import site.chatda.domain.counsel.repository.TeacherCommentRepository;
+import site.chatda.domain.counsel.repository.*;
 import site.chatda.domain.job.entity.Job;
 import site.chatda.domain.job.repository.JobRepository;
 import site.chatda.domain.member.entity.Member;
@@ -40,6 +38,7 @@ public class CounselServiceImpl implements CounselService {
     private final MemberRepository memberRepository;
     private final JobRepository jobRepository;
     private final TeacherCommentRepository teacherCommentRepository;
+    private final TeacherJobSuggestionRepository teacherJobSuggestionRepository;
     private final BatchRepository batchRepository;
 
     @Override
@@ -353,6 +352,31 @@ public class CounselServiceImpl implements CounselService {
                 .orElseGet(() -> saveTeacherCommentReq.toTeacherComment(report));
 
         teacherCommentRepository.save(teacherComment);
+    }
+
+    @Override
+    @Transactional
+    public void saveTeacherJobSuggestion(Member member, Long counselId, SaveTeacherJobSuggestionReq saveTeacherJobSuggestionReq) {
+
+        Report report = reportRepository.findByCounselId(counselId)
+                .orElseThrow(() -> new CustomException(NOT_FOUND));
+
+        Counsel counsel = report.getCounsel();
+
+        checkMyCounsel(member, counsel);
+
+        if (counsel.getStep() != RESULT_WAITING) {
+            throw new CustomException(BAD_REQUEST);
+        }
+
+        TeacherJobSuggestion teacherJobSuggestion = teacherJobSuggestionRepository.findById(counselId)
+                .map(js -> {
+                    js.updateContent(saveTeacherJobSuggestionReq.getContent());
+                    return js;
+                })
+                .orElseGet(() -> saveTeacherJobSuggestionReq.toTeacherJobSuggestion(report));
+
+        teacherJobSuggestionRepository.save(teacherJobSuggestion);
     }
 
     private void checkMyCounsel(Member member, Counsel counsel) {

@@ -3,6 +3,7 @@ package site.chatda.domain.counsel.service;
 import site.chatda.domain.counsel.dto.req.ChangeStepReq;
 import site.chatda.domain.counsel.dto.req.CreateReportReq;
 import site.chatda.domain.counsel.dto.req.SaveTeacherCommentReq;
+import site.chatda.domain.counsel.dto.req.SaveTeacherJobSuggestionReq;
 import site.chatda.domain.counsel.dto.res.CounselListRes;
 import site.chatda.domain.member.entity.Member;
 
@@ -21,4 +22,6 @@ public interface CounselService {
     void createReport(Long counselId, CreateReportReq createReportReq);
 
     void saveTeacherComment(Member member, Long counselId, SaveTeacherCommentReq saveTeacherCommentReq);
+
+    void saveTeacherJobSuggestion(Member member, Long counselId, SaveTeacherJobSuggestionReq saveTeacherJobSuggestionReq);
 }
