@@ -7,6 +7,7 @@ import org.springframework.web.bind.annotation.*;
 import site.chatda.domain.counsel.dto.req.ChangeStepReq;
 import site.chatda.domain.counsel.dto.req.CreateReportReq;
 import site.chatda.domain.counsel.dto.req.SaveTeacherCommentReq;
+import site.chatda.domain.counsel.dto.req.SaveTeacherJobSuggestionReq;
 import site.chatda.domain.counsel.dto.res.CounselListRes;
 import site.chatda.domain.counsel.service.CounselService;
 import site.chatda.domain.member.entity.Member;
@@ -88,6 +89,17 @@ public class CounselController {
                                                 @Valid @RequestBody SaveTeacherCommentReq saveTeacherCommentReq) {
 
         counselService.saveTeacherComment(member, counselId, saveTeacherCommentReq);
+
+        return ResponseDto.success(CREATED);
+    }
+
+    @PutMapping("/{counselId}/job_suggestions")
+    @PreAuthorize("hasRole('TEACHER')")
+    public ResponseDto<Void> saveTeacherJobSuggestion(@LoginMember Member member,
+                                                @PathVariable("counselId") Long counselId,
+                                                @Valid @RequestBody SaveTeacherJobSuggestionReq saveTeacherJobSuggestionReq) {
+
+        counselService.saveTeacherJobSuggestion(member, counselId, saveTeacherJobSuggestionReq);
 
         return ResponseDto.success(CREATED);
     }

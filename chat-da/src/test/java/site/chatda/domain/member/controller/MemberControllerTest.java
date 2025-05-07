@@ -104,7 +104,7 @@ public class MemberControllerTest {
     }
 
     @Test
-    @DisplayName("선생 정보 조회 성공")
+    @DisplayName("교사 정보 조회 성공")
     public void member_details_teacher_success() throws Exception {
 
         // given
@@ -122,14 +122,14 @@ public class MemberControllerTest {
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$.header.message").value(OK.getMessage()))
                 .andDo(document(
-                        "선생 정보 조회 성공",
+                        "교사 정보 조회 성공",
                         preprocessRequest(prettyPrint()),
                         preprocessResponse(prettyPrint()),
                         resource(ResourceSnippetParameters.builder()
                                 .tag("Member API")
                                 .summary("멤버 정보조회 API")
                                 .requestHeaders(
-                                        headerWithName("Authorization").description("선생 어세스 토큰")
+                                        headerWithName("Authorization").description("교사 어세스 토큰")
                                 )
                                 .responseFields(
                                         getCommonResponseFields(
@@ -140,10 +140,10 @@ public class MemberControllerTest {
                                                 fieldWithPath("body.classNumber").type(NUMBER)
                                                         .description("반"),
                                                 fieldWithPath("body.name").type(STRING)
-                                                        .description("선생 이름")
+                                                        .description("교사 이름")
                                         )
                                 )
-                                .responseSchema(Schema.schema("선생 정보 조회 Response"))
+                                .responseSchema(Schema.schema("교사 정보 조회 Response"))
                                 .build()
                         ))
                 );
@@ -175,7 +175,7 @@ public class MemberControllerTest {
                                 .tag("Member API")
                                 .summary("학생 리스트 조회 API")
                                 .requestHeaders(
-                                        headerWithName("Authorization").description("선생 어세스 토큰")
+                                        headerWithName("Authorization").description("교사 어세스 토큰")
                                 )
                                 .responseFields(
                                         getCommonResponseFields(
@@ -234,7 +234,7 @@ public class MemberControllerTest {
                                 .tag("Member API")
                                 .summary("학생 리스트 조회 API")
                                 .requestHeaders(
-                                        headerWithName("Authorization").description("선생 어세스 토큰")
+                                        headerWithName("Authorization").description("교사 어세스 토큰")
                                 )
                                 .queryParameters(
                                         parameterWithName("counselStep").optional()
@@ -336,7 +336,7 @@ public class MemberControllerTest {
                                 .tag("Member API")
                                 .summary("학생 리스트 조회 API")
                                 .requestHeaders(
-                                        headerWithName("Authorization").description("선생 어세스 토큰")
+                                        headerWithName("Authorization").description("교사 어세스 토큰")
                                 )
                                 .queryParameters(
                                         parameterWithName("counselStep").optional()

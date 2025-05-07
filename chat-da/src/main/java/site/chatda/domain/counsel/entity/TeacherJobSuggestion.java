@@ -26,4 +26,8 @@ public class TeacherJobSuggestion {
     @NotBlank
     @Column(length = 500)
     private String content;
+
+    public void updateContent(String content) {
+        this.content = content;
+    }
 }
