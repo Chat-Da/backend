@@ -6,6 +6,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import site.chatda.domain.counsel.dto.req.ChangeStepReq;
 import site.chatda.domain.counsel.dto.req.CreateReportReq;
+import site.chatda.domain.counsel.dto.req.SaveTeacherCommentReq;
 import site.chatda.domain.counsel.dto.res.CounselListRes;
 import site.chatda.domain.counsel.entity.*;
 import site.chatda.domain.counsel.entity.id.*;
@@ -13,6 +14,7 @@ import site.chatda.domain.counsel.enums.CounselStep;
 import site.chatda.domain.counsel.repository.BatchRepository;
 import site.chatda.domain.counsel.repository.CounselRepository;
 import site.chatda.domain.counsel.repository.ReportRepository;
+import site.chatda.domain.counsel.repository.TeacherCommentRepository;
 import site.chatda.domain.job.entity.Job;
 import site.chatda.domain.job.repository.JobRepository;
 import site.chatda.domain.member.entity.Member;
@@ -37,6 +39,7 @@ public class CounselServiceImpl implements CounselService {
     private final ReportRepository reportRepository;
     private final MemberRepository memberRepository;
     private final JobRepository jobRepository;
+    private final TeacherCommentRepository teacherCommentRepository;
     private final BatchRepository batchRepository;
 
     @Override
@@ -161,23 +164,6 @@ public class CounselServiceImpl implements CounselService {
         validateCounselStep(member.getRole(), counsel, counselStep);
 
         counsel.changeStep(counselStep);
-    }
-
-    private void checkMyCounsel(Member member, Counsel counsel) {
-
-        switch (member.getRole()) {
-            case ROLE_STUDENT -> {
-                if (!counsel.getStudent().getId().equals(member.getId())) {
-                    throw new CustomException(FORBIDDEN);
-                }
-            }
-
-            case ROLE_TEACHER -> {
-                if (!counsel.getTeacher().getId().equals(member.getId())) {
-                    throw new CustomException(FORBIDDEN);
-                }
-            }
-        }
     }
 
     private void validateCounselStep(Role role, Counsel counsel, CounselStep counselStep) {
@@ -342,5 +328,47 @@ public class CounselServiceImpl implements CounselService {
         }
 
         batchRepository.saveGrowthSuggestions(growthSuggestions);
+    }
+
+    @Override
+    @Transactional
+    public void saveTeacherComment(Member member, Long counselId, SaveTeacherCommentReq saveTeacherCommentReq) {
+
+        Report report = reportRepository.findByCounselId(counselId)
+                .orElseThrow(() -> new CustomException(NOT_FOUND));
+
+        Counsel counsel = report.getCounsel();
+
+        checkMyCounsel(member, counsel);
+
+        if (counsel.getStep() != RESULT_WAITING) {
+            throw new CustomException(BAD_REQUEST);
+        }
+
+        TeacherComment teacherComment = teacherCommentRepository.findById(counselId)
+                .map(tc -> {
+                    tc.updateContent(saveTeacherCommentReq.getContent());
+                    return tc;
+                })
+                .orElseGet(() -> saveTeacherCommentReq.toTeacherComment(report));
+
+        teacherCommentRepository.save(teacherComment);
+    }
+
+    private void checkMyCounsel(Member member, Counsel counsel) {
+
+        switch (member.getRole()) {
+            case ROLE_STUDENT -> {
+                if (!counsel.getStudent().getId().equals(member.getId())) {
+                    throw new CustomException(FORBIDDEN);
+                }
+            }
+
+            case ROLE_TEACHER -> {
+                if (!counsel.getTeacher().getId().equals(member.getId())) {
+                    throw new CustomException(FORBIDDEN);
+                }
+            }
+        }
     }
 }

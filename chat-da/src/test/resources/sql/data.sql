@@ -1360,3 +1360,32 @@ insert into counsel(counsel_id, school_id, level, student_id, teacher_id, step, 
                                                                                                                          (4, 1, 2, 2, 1, 'COMPLETED', false, '2024-09-03 00:00:00', '2024-09-05 00:00:00'),
                                                                                                                          (5, 1, 3, 3, 1, 'RESULT_WAITING', false, current_time, current_time),
                                                                                                                          (6, 1, 3, 4, 1, 'IN_PROGRESS', false, current_time, current_time);
+
+insert into report(counsel_id, personality, self_awareness, self_awareness_description, strength_summary, weakness_summary) values
+                                                                                                                                (1, '성향 요약', 'MIDDLE', '자기 이해도 설명', '강점 요약', '약점 요약'),
+                                                                                                                                (3, '성향 요약', 'MIDDLE', '자기 이해도 설명', '강점 요약', '약점 요약'),
+                                                                                                                                (5, '성향 요약', 'MIDDLE', '자기 이해도 설명', '강점 요약', '약점 요약');
+
+insert into strength(counsel_id, seq, description) values
+                                                       (5, 1, '강점1'),
+                                                       (5, 2, '강점2'),
+                                                       (5, 3, '강점3');
+
+insert into weakness(counsel_id, seq, description) values
+                                                       (5, 1, '약점1'),
+                                                       (5, 2, '약점2'),
+                                                       (5, 3, '약점3');
+
+insert into interest(counsel_id, seq, description) values
+                                                       (5, 1, '흥미1'),
+                                                       (5, 2, '흥미2'),
+                                                       (5, 3, '흥미3');
+
+insert into job_recommendation(job_id, counsel_id, reason, growth_suggestions) values
+                                                                                  (10111, 5, '이유', '성장 제안'),
+                                                                                  (10112, 5, '이유', '성장 제안');
+
+insert into growth_suggestion(counsel_id, seq, content) values
+                                                            (5, 1, '성장 제안1'),
+                                                            (5, 2, '성장 제안2'),
+                                                            (5, 3, '성장 제안3');

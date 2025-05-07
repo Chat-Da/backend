@@ -951,4 +951,222 @@ public class CounselControllerTest {
                         ))
                 );
     }
+
+    @Test
+    @DisplayName("담당 교사 한마디 추가 성공")
+    public void save_teacher_comment_success() throws Exception {
+
+        // given
+        Long counselId = 5L;
+
+        JSONObject jsonObject = new JSONObject();
+
+        jsonObject.put("content", "담당 교사 한마디");
+
+        String content = jsonObject.toString();
+
+        // when
+        ResultActions actions = mockMvc.perform(
+                put("/api/counsels/{counselId}/comments", counselId)
+                        .header("Authorization", "Bearer " + teacherToken)
+                        .accept(APPLICATION_JSON)
+                        .contentType(APPLICATION_JSON)
+                        .content(content)
+                        .characterEncoding("UTF-8")
+        );
+
+        // then
+        actions
+                .andExpect(status().isCreated())
+                .andExpect(jsonPath("$.header.message").value(CREATED.getMessage()))
+                .andDo(document(
+                        "담당 교사 한마디 추가 성공",
+                        preprocessRequest(prettyPrint()),
+                        preprocessResponse(prettyPrint()),
+                        resource(ResourceSnippetParameters.builder()
+                                .tag("Counsel API")
+                                .summary("담당 교사 한마디 추가 API")
+                                .requestHeaders(
+                                        headerWithName("Authorization").description("선생 어세스 토큰")
+                                )
+                                .requestFields(
+                                        List.of(
+                                                fieldWithPath("content").type(STRING)
+                                                        .description("담당 교사 한마디 (500자 이내)")
+                                        )
+                                )
+                                .responseFields(
+                                        getCommonResponseFields(
+                                                fieldWithPath("body").type(NULL)
+                                                        .description("내용 없음")
+                                        )
+                                )
+                                .requestSchema(Schema.schema("담당 교사 한마디 추가 Request"))
+                                .responseSchema(Schema.schema("담당 교사 한마디 추가 Response"))
+                                .build()
+                        ))
+                );
+    }
+
+    @Test
+    @DisplayName("담당 교사 한마디 추가 실패 - 없는 보고서")
+    public void save_teacher_comment_fail_wrong_report() throws Exception {
+
+        // given
+        Long counselId = 20005L;
+
+        JSONObject jsonObject = new JSONObject();
+
+        jsonObject.put("content", "담당 교사 한마디");
+
+        String content = jsonObject.toString();
+
+        // when
+        ResultActions actions = mockMvc.perform(
+                put("/api/counsels/{counselId}/comments", counselId)
+                        .header("Authorization", "Bearer " + teacherToken)
+                        .accept(APPLICATION_JSON)
+                        .contentType(APPLICATION_JSON)
+                        .content(content)
+                        .characterEncoding("UTF-8")
+        );
+
+        // then
+        actions
+                .andExpect(status().isNotFound())
+                .andExpect(jsonPath("$.header.message").value(NOT_FOUND.getMessage()))
+                .andDo(document(
+                        "담당 교사 한마디 추가 실패 - 없는 보고서",
+                        preprocessRequest(prettyPrint()),
+                        preprocessResponse(prettyPrint()),
+                        resource(ResourceSnippetParameters.builder()
+                                .tag("Counsel API")
+                                .summary("담당 교사 한마디 추가 API")
+                                .requestHeaders(
+                                        headerWithName("Authorization").description("선생 어세스 토큰")
+                                )
+                                .requestFields(
+                                        List.of(
+                                                fieldWithPath("content").type(STRING)
+                                                        .description("담당 교사 한마디 (500자 이내)")
+                                        )
+                                )
+                                .responseFields(
+                                        getCommonResponseFields(
+                                                fieldWithPath("body").type(NULL)
+                                                        .description("내용 없음")
+                                        )
+                                )
+                                .build()
+                        ))
+                );
+    }
+
+    @Test
+    @DisplayName("담당 교사 한마디 추가 실패 - 결과 대기중이 아님")
+    public void save_teacher_comment_fail_is_not_result_waiting() throws Exception {
+
+        // given
+        Long counselId = 3L;
+
+        JSONObject jsonObject = new JSONObject();
+
+        jsonObject.put("content", "담당 교사 한마디");
+
+        String content = jsonObject.toString();
+
+        // when
+        ResultActions actions = mockMvc.perform(
+                put("/api/counsels/{counselId}/comments", counselId)
+                        .header("Authorization", "Bearer " + teacherToken)
+                        .accept(APPLICATION_JSON)
+                        .contentType(APPLICATION_JSON)
+                        .content(content)
+                        .characterEncoding("UTF-8")
+        );
+
+        // then
+        actions
+                .andExpect(status().isBadRequest())
+                .andExpect(jsonPath("$.header.message").value(BAD_REQUEST.getMessage()))
+                .andDo(document(
+                        "담당 교사 한마디 추가 실패 - 결과 대기중이 아님",
+                        preprocessRequest(prettyPrint()),
+                        preprocessResponse(prettyPrint()),
+                        resource(ResourceSnippetParameters.builder()
+                                .tag("Counsel API")
+                                .summary("담당 교사 한마디 추가 API")
+                                .requestHeaders(
+                                        headerWithName("Authorization").description("선생 어세스 토큰")
+                                )
+                                .requestFields(
+                                        List.of(
+                                                fieldWithPath("content").type(STRING)
+                                                        .description("담당 교사 한마디 (500자 이내)")
+                                        )
+                                )
+                                .responseFields(
+                                        getCommonResponseFields(
+                                                fieldWithPath("body").type(NULL)
+                                                        .description("내용 없음")
+                                        )
+                                )
+                                .build()
+                        ))
+                );
+    }
+
+    @Test
+    @DisplayName("담당 교사 한마디 추가 실패 - 담당 학생 보고서가 아님")
+    public void save_teacher_comment_fail_is_not_my_student() throws Exception {
+
+        // given
+        Long counselId = 1L;
+
+        JSONObject jsonObject = new JSONObject();
+
+        jsonObject.put("content", "담당 교사 한마디");
+
+        String content = jsonObject.toString();
+
+        // when
+        ResultActions actions = mockMvc.perform(
+                put("/api/counsels/{counselId}/comments", counselId)
+                        .header("Authorization", "Bearer " + teacherToken)
+                        .accept(APPLICATION_JSON)
+                        .contentType(APPLICATION_JSON)
+                        .content(content)
+                        .characterEncoding("UTF-8")
+        );
+
+        // then
+        actions
+                .andExpect(status().isForbidden())
+                .andExpect(jsonPath("$.header.message").value(FORBIDDEN.getMessage()))
+                .andDo(document(
+                        "담당 교사 한마디 추가 실패 - 담당 학생 보고서가 아님",
+                        preprocessRequest(prettyPrint()),
+                        preprocessResponse(prettyPrint()),
+                        resource(ResourceSnippetParameters.builder()
+                                .tag("Counsel API")
+                                .summary("담당 교사 한마디 추가 API")
+                                .requestHeaders(
+                                        headerWithName("Authorization").description("선생 어세스 토큰")
+                                )
+                                .requestFields(
+                                        List.of(
+                                                fieldWithPath("content").type(STRING)
+                                                        .description("담당 교사 한마디 (500자 이내)")
+                                        )
+                                )
+                                .responseFields(
+                                        getCommonResponseFields(
+                                                fieldWithPath("body").type(NULL)
+                                                        .description("내용 없음")
+                                        )
+                                )
+                                .build()
+                        ))
+                );
+    }
 }
