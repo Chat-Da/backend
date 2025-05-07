@@ -4,10 +4,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import site.chatda.domain.counsel.dto.req.ChangeStepReq;
-import site.chatda.domain.counsel.dto.req.CreateReportReq;
-import site.chatda.domain.counsel.dto.req.SaveTeacherCommentReq;
-import site.chatda.domain.counsel.dto.req.SaveTeacherJobSuggestionReq;
+import site.chatda.domain.counsel.dto.req.*;
 import site.chatda.domain.counsel.dto.res.CounselListRes;
 import site.chatda.domain.counsel.entity.*;
 import site.chatda.domain.counsel.entity.id.*;
@@ -39,6 +36,7 @@ public class CounselServiceImpl implements CounselService {
     private final JobRepository jobRepository;
     private final TeacherCommentRepository teacherCommentRepository;
     private final TeacherJobSuggestionRepository teacherJobSuggestionRepository;
+    private final TeacherGuidanceRepository teacherGuidanceRepository;
     private final BatchRepository batchRepository;
 
     @Override
@@ -356,7 +354,8 @@ public class CounselServiceImpl implements CounselService {
 
     @Override
     @Transactional
-    public void saveTeacherJobSuggestion(Member member, Long counselId, SaveTeacherJobSuggestionReq saveTeacherJobSuggestionReq) {
+    public void saveTeacherJobSuggestion(Member member, Long counselId,
+                                         SaveTeacherJobSuggestionReq saveTeacherJobSuggestionReq) {
 
         Report report = reportRepository.findByCounselId(counselId)
                 .orElseThrow(() -> new CustomException(NOT_FOUND));
@@ -377,6 +376,36 @@ public class CounselServiceImpl implements CounselService {
                 .orElseGet(() -> saveTeacherJobSuggestionReq.toTeacherJobSuggestion(report));
 
         teacherJobSuggestionRepository.save(teacherJobSuggestion);
+    }
+
+    @Override
+    @Transactional
+    public void saveTeacherGuidance(Member member, Long counselId, Integer seq,
+                                    SaveTeacherGuidanceReq saveTeacherGuidanceReq) {
+
+        if (seq < 1 || seq > 3) {
+            throw new CustomException(BAD_REQUEST);
+        }
+
+        Report report = reportRepository.findByCounselId(counselId)
+                .orElseThrow(() -> new CustomException(NOT_FOUND));
+
+        Counsel counsel = report.getCounsel();
+
+        checkMyCounsel(member, counsel);
+
+        if (counsel.getStep() != RESULT_WAITING) {
+            throw new CustomException(BAD_REQUEST);
+        }
+
+        TeacherGuidance teacherGuidance = teacherGuidanceRepository.findById(new TeacherGuidanceId(report.getId(), seq))
+                .map(tg -> {
+                    tg.updateContent(saveTeacherGuidanceReq.getContent());
+                    return tg;
+                })
+                .orElseGet(() -> saveTeacherGuidanceReq.teacherGuidance(report, seq));
+
+        teacherGuidanceRepository.save(teacherGuidance);
     }
 
     private void checkMyCounsel(Member member, Counsel counsel) {

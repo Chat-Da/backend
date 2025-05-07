@@ -4,10 +4,7 @@ import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
-import site.chatda.domain.counsel.dto.req.ChangeStepReq;
-import site.chatda.domain.counsel.dto.req.CreateReportReq;
-import site.chatda.domain.counsel.dto.req.SaveTeacherCommentReq;
-import site.chatda.domain.counsel.dto.req.SaveTeacherJobSuggestionReq;
+import site.chatda.domain.counsel.dto.req.*;
 import site.chatda.domain.counsel.dto.res.CounselListRes;
 import site.chatda.domain.counsel.service.CounselService;
 import site.chatda.domain.member.entity.Member;
@@ -100,6 +97,18 @@ public class CounselController {
                                                 @Valid @RequestBody SaveTeacherJobSuggestionReq saveTeacherJobSuggestionReq) {
 
         counselService.saveTeacherJobSuggestion(member, counselId, saveTeacherJobSuggestionReq);
+
+        return ResponseDto.success(CREATED);
+    }
+
+    @PutMapping("/{counselId}/guidance/{seq}")
+    @PreAuthorize("hasRole('TEACHER')")
+    public ResponseDto<Void> saveTeacherGuidance(@LoginMember Member member,
+                                                 @PathVariable("counselId") Long counselId,
+                                                 @PathVariable("seq") Integer seq,
+                                                 @Valid @RequestBody SaveTeacherGuidanceReq saveTeacherGuidanceReq) {
+
+        counselService.saveTeacherGuidance(member, counselId, seq, saveTeacherGuidanceReq);
 
         return ResponseDto.success(CREATED);
     }
