@@ -26,4 +26,8 @@ public class TeacherGuidance {
     @NotNull
     @Column(length = 200)
     private String content;
+
+    public void updateContent(String content) {
+        this.content = content;
+    }
 }
