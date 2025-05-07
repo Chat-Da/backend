@@ -75,7 +75,7 @@ public class AuthControllerTest {
     }
 
     @Test
-    @DisplayName("선생 로그인 성공")
+    @DisplayName("교사 로그인 성공")
     public void teacher_login_success() throws Exception {
 
         // given
@@ -90,14 +90,14 @@ public class AuthControllerTest {
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$.header.message").value(OK.getMessage()))
                 .andDo(document(
-                        "선생 로그인 성공",
+                        "교사 로그인 성공",
                         preprocessRequest(prettyPrint()),
                         preprocessResponse(prettyPrint()),
                         resource(ResourceSnippetParameters.builder()
                                 .tag("Auth API")
-                                .summary("선생 로그인 API")
+                                .summary("교사 로그인 API")
                                 .responseHeaders(
-                                        headerWithName("Authorization").description("선생 어세스 토큰")
+                                        headerWithName("Authorization").description("교사 어세스 토큰")
                                 )
                                 .responseFields(
                                         getCommonResponseFields(
@@ -105,7 +105,7 @@ public class AuthControllerTest {
                                                         .description("내용 없음")
                                         )
                                 )
-                                .responseSchema(Schema.schema("선생 로그인 Response"))
+                                .responseSchema(Schema.schema("교사 로그인 Response"))
                                 .build()
                         ))
                 );
