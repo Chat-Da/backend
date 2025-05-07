@@ -12,7 +12,7 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
- class TeacherComment {
+public class TeacherComment {
 
     @Id
     @Column(name = "counsel_id", columnDefinition = "INT UNSIGNED")
@@ -26,4 +26,8 @@ import lombok.NoArgsConstructor;
     @NotBlank
     @Column(length = 500)
     private String content;
+
+    public void updateContent(String content) {
+        this.content = content;
+    }
 }

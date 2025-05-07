@@ -12,7 +12,7 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
- class TeacherJobSuggestion {
+public class TeacherJobSuggestion {
 
     @Id
     @Column(name = "counsel_id", columnDefinition = "INT UNSIGNED")
