@@ -23,7 +23,7 @@ public class CounselDto {
         this.counselId = counsel.getId();
         this.teacherName = counsel.getTeacher().getMember().getName();
         this.step = counsel.getStep().getDescription();
-        this.startDate = DateFormatter.convertToDate(counsel.getCreatedAt());
-        this.endDate = counsel.getStep() == COMPLETED ? DateFormatter.convertToDate(counsel.getModifiedAt()) : null;
+        this.startDate = DateFormatter.convertToString(counsel.getCreatedAt());
+        this.endDate = counsel.getStep() == COMPLETED ? DateFormatter.convertToString(counsel.getModifiedAt()) : null;
     }
 }

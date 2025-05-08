@@ -4,13 +4,16 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import site.chatda.domain.counsel.dto.*;
 import site.chatda.domain.counsel.dto.req.*;
 import site.chatda.domain.counsel.dto.res.CounselListRes;
+import site.chatda.domain.counsel.dto.res.ReportDetailsRes;
 import site.chatda.domain.counsel.entity.*;
 import site.chatda.domain.counsel.entity.id.*;
 import site.chatda.domain.counsel.enums.CounselStep;
 import site.chatda.domain.counsel.repository.*;
 import site.chatda.domain.job.entity.Job;
+import site.chatda.domain.job.entity.JobSkill;
 import site.chatda.domain.job.repository.JobRepository;
 import site.chatda.domain.member.entity.Member;
 import site.chatda.domain.member.entity.Student;
@@ -21,8 +24,12 @@ import site.chatda.global.exception.CustomException;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
+import java.util.Optional;
+import java.util.stream.Collectors;
 
 import static site.chatda.domain.counsel.enums.CounselStep.*;
+import static site.chatda.domain.member.enums.Role.ROLE_TEACHER;
 import static site.chatda.global.statuscode.ErrorCode.*;
 
 @Service
@@ -406,6 +413,113 @@ public class CounselServiceImpl implements CounselService {
                 .orElseGet(() -> saveTeacherGuidanceReq.teacherGuidance(report, seq));
 
         teacherGuidanceRepository.save(teacherGuidance);
+    }
+
+    @Override
+    public ReportDetailsRes getReportDetails(Member member, Long counselId) {
+
+        Report report = reportRepository.findByCounselId(counselId)
+                .orElseThrow(() -> new CustomException(NOT_FOUND));
+
+        Counsel counsel = report.getCounsel();
+
+        checkMyCounsel(member, counsel);
+
+        StudentInfoDto studentInfo = memberRepository.findStudentInfo(counsel.getStudent().getId())
+                .orElseThrow(() -> new CustomException(NOT_FOUND));
+
+        TeacherInfoDto teacherInfo = memberRepository.findTeacherInfo(counsel.getTeacher().getId())
+                .orElseThrow(() -> new CustomException(NOT_FOUND));
+
+        ReportDetailsRes result = new ReportDetailsRes(report, studentInfo, teacherInfo);
+
+        setJobRecommendations(result);
+        setStrengths(result);
+        setWeaknesses(result);
+        setInterests(result);
+        setGrowthSuggestions(result);
+
+        if (counsel.getStep() == COMPLETED || member.getRole() == ROLE_TEACHER) {
+            setTeacherFeedback(result);
+        }
+
+        return result;
+    }
+
+    private void setJobRecommendations(ReportDetailsRes result) {
+
+        List<JobRecommendation> jobRecommendationList =
+                jobRepository.findJobRecommendationsByCounselId(result.getCounselId());
+
+        Map<Integer, List<JobSkill>> jobSkills = jobRepository.findJobSkills(
+                        jobRecommendationList.stream()
+                                .map(jobRecommendation -> jobRecommendation.getJob().getId())
+                                .toList())
+                .stream()
+                .collect(Collectors.groupingBy(jobSkill -> jobSkill.getJob().getId()));
+
+        List<JobRecommendationDto> jobRecommendations = jobRecommendationList.stream()
+                .map(jobRecommendation ->
+                        new JobRecommendationDto(jobRecommendation, jobSkills.get(jobRecommendation.getJob().getId())))
+                .toList();
+
+        result.setJobRecommendations(jobRecommendations);
+    }
+
+    private void setStrengths(ReportDetailsRes result) {
+
+        List<String> strengths = reportRepository.findStrengths(result.getCounselId()).stream()
+                .map(Strength::getDescription)
+                .toList();
+
+        result.setStrengths(strengths);
+    }
+
+    private void setWeaknesses(ReportDetailsRes result) {
+
+        List<String> weaknesses = reportRepository.findWeaknesses(result.getCounselId()).stream()
+                .map(Weakness::getDescription)
+                .toList();
+
+        result.setWeaknesses(weaknesses);
+    }
+
+    private void setInterests(ReportDetailsRes result) {
+
+        List<String> interests = reportRepository.findInterests(result.getCounselId()).stream()
+                .map(Interest::getDescription)
+                .toList();
+
+        result.setInterests(interests);
+    }
+
+    private void setGrowthSuggestions(ReportDetailsRes result) {
+
+        List<String> growthSuggestions = reportRepository.findGrowthSuggestions(result.getCounselId()).stream()
+                .map(GrowthSuggestion::getContent)
+                .toList();
+
+        result.setGrowthSuggestions(growthSuggestions);
+    }
+
+    private void setTeacherFeedback(ReportDetailsRes result) {
+
+        Long reportId = result.getCounselId();
+
+        TeacherFeedbackDto teacherFeedback = new TeacherFeedbackDto();
+
+        Optional<String> comment = reportRepository.findTeacherComment(reportId);
+        Optional<String> jobSuggestion = reportRepository.findTeacherJobSuggestion(reportId);
+
+        List<TeacherGuidanceDto> teacherGuidance = reportRepository.findTeacherGuidance(reportId).stream()
+                .map(guidance -> new TeacherGuidanceDto(guidance.getSeq(), guidance.getContent()))
+                .toList();
+
+        comment.ifPresent(teacherFeedback::setComment);
+        jobSuggestion.ifPresent(teacherFeedback::setJobSuggestion);
+        teacherFeedback.setGuidance(teacherGuidance);
+
+        result.setTeacherFeedback(teacherFeedback);
     }
 
     private void checkMyCounsel(Member member, Counsel counsel) {

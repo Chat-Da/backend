@@ -1362,30 +1362,54 @@ insert into counsel(counsel_id, school_id, level, student_id, teacher_id, step, 
                                                                                                                          (6, 1, 3, 4, 1, 'IN_PROGRESS', false, current_time, current_time);
 
 insert into report(counsel_id, personality, self_awareness, self_awareness_description, strength_summary, weakness_summary) values
-                                                                                                                                (1, '성향 요약', 'MIDDLE', '자기 이해도 설명', '강점 요약', '약점 요약'),
+                                                                                                                                (1, '성이 학생은 사람과 소통하는 것을 좋아하고, 팀워크를 중시하는 성향을 보였습니다.  창의적인 아이디어를 제안하는 데 흥미를 느끼며, 반복적인 작업에는 흥미를 느끼지 못하는 경향이 있습니다.  이러한 성향을 바탕으로 커뮤니케이션 능력과 창의성을 활용할 수 있는 진로를 추천했습니다.', 'MIDDLE', '자신의 강점과 관심사를 잘 인식하고 있으며, 이를 진로 방향성과 연결하는 능력이 뛰어납니다. 다만 구체적인 계획 수립 단계에서는 약간의 추가 고민이 필요할 수 있습니다.', '이 학생은 사람과 소통하는 것을 좋아하고, 팀워크를 중시하는 성향을 보였습니다.', '반복적인 작업이나 세부적인 규칙을 엄격히 따라야 하는 업무에서는 흥미를 유지하거나 집중력을 지속하는 데 어려움을 느끼는 편입니다.'),
                                                                                                                                 (3, '성향 요약', 'MIDDLE', '자기 이해도 설명', '강점 요약', '약점 요약'),
                                                                                                                                 (5, '성향 요약', 'MIDDLE', '자기 이해도 설명', '강점 요약', '약점 요약');
 
 insert into strength(counsel_id, seq, description) values
+                                                       (1, 1, '팀워크'),
+                                                       (1, 2, '창의적 사고'),
+                                                       (1, 3, '커뮤니케이션 능력'),
                                                        (5, 1, '강점1'),
                                                        (5, 2, '강점2'),
                                                        (5, 3, '강점3');
 
 insert into weakness(counsel_id, seq, description) values
+                                                       (1, 1, '반복 작업에 대한 낮은 흥미'),
+                                                       (1, 2, '세부적인 규칙 준수에 대한 집중력 저하'),
                                                        (5, 1, '약점1'),
                                                        (5, 2, '약점2'),
                                                        (5, 3, '약점3');
 
 insert into interest(counsel_id, seq, description) values
+                                                       (1, 1, '마케팅'),
+                                                       (1, 2, '브랜딩 기획'),
+                                                       (1, 3, '교육 콘텐츠 개발'),
                                                        (5, 1, '흥미1'),
                                                        (5, 2, '흥미2'),
                                                        (5, 3, '흥미3');
 
 insert into job_recommendation(job_id, counsel_id, reason, growth_suggestions) values
-                                                                                  (10111, 5, '이유', '성장 제안'),
-                                                                                  (10112, 5, '이유', '성장 제안');
+                                                                                   (1068, 1, '창의적 사고와 소통 능력이 뛰어나고, 소비자 관점에서 문제를 분석하고 해결하는 데 강점을 지니고 있어 마케팅 전문가에 적합합니다.', '트렌드 분석 능력과 데이터 활용 역량을 키우고, 다양한 마케팅 프로젝트에 참여해 실전 경험을 쌓는 것이 좋습니다.'),
+                                                                                   (1103, 1, '분석적 사고와 교육에 대한 열정을 갖추고 있어, 교육 문제를 체계적으로 탐구하는 교육학 연구원에 적합합니다.', '교육 이론과 연구 방법론에 대한 이해를 심화하고, 실제 교육 현장을 관찰하거나 참여하며 연구 역량을 키우는 것이 좋습니다.'),
+                                                                                   (10111, 5, '이유', '성장 제안'),
+                                                                                   (10112, 5, '이유', '성장 제안');
 
 insert into growth_suggestion(counsel_id, seq, content) values
+                                                            (1, 1, '교내 홍보 및 마케팅 활동에 참여하여 실전 경험 쌓기'),
+                                                            (1, 2, '다양한 주제에 대한 발표 및 아이디어 제안 활동 강화'),
+                                                            (1, 3, '창의적 사고를 키우기 위해 프로젝트 기반 학습에 적극적으로 참여하기'),
                                                             (5, 1, '성장 제안1'),
                                                             (5, 2, '성장 제안2'),
                                                             (5, 3, '성장 제안3');
+
+insert into teacher_comment(counsel_id, content) values
+                                                     (1, '성실하고 공감 능력이 뛰어나며, 타인의 말을 경청하고 협력하는 태도가 돋보입니다.');
+
+insert into teacher_job_suggestion(counsel_id, content) values
+                                                            (1, '교육학 연구원, 마케팅 전문가, 상담심리사 등 사람과 소통하고 분석하는 직무에 적합합니다.');
+
+insert into teacher_guidance(counsel_id, seq, content) values
+                                                          (1, 1, '다양한 분야의 글을 읽고 비판적으로 사고해보기'),
+                                                          (1, 2, '팀 활동에 적극 참여하며 리더십 경험 쌓기'),
+                                                          (1, 3, '관심 직무 관련 체험이나 멘토링 기회 활용하기');
