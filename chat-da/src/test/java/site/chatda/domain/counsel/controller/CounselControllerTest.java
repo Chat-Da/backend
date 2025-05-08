@@ -51,15 +51,19 @@ public class CounselControllerTest {
     private JwtUtils jwtUtils;
 
     private static final String studentUUID = "78954910-7440-4241-bd9d-ca3abc44d291";
+    private static final String studentUUID2 = "54449b31-c04d-4c15-9136-c7e2a618564e";
     private static final String teacherUUID = "5a1e826e-2a44-4fea-98b2-bb96887b9737";
     private static final String adminUUID = "eca58d22-f409-465b-a179-b5d527b4f687";
+
     private String studentToken;
+    private String studentToken2;
     private String teacherToken;
     private String adminToken;
 
     @PostConstruct
     public void init() {
         studentToken = jwtUtils.createToken(studentUUID);
+        studentToken2 = jwtUtils.createToken(studentUUID2);
         teacherToken = jwtUtils.createToken(teacherUUID);
         adminToken = jwtUtils.createToken(adminUUID);
     }
@@ -782,33 +786,7 @@ public class CounselControllerTest {
 
         // given
         Long counselId = 6L;
-
-        JSONObject jsonObject = new JSONObject();
-
-        jsonObject.put("personality", "이 학생은 사람과 소통하는 것을 좋아하고, 팀워크를 중시하는 성향을 보였습니다.  창의적인 아이디어를 제안하는 데 흥미를 느끼며, 반복적인 작업에는 흥미를 느끼지 못하는 경향이 있습니다.  이러한 성향을 바탕으로 커뮤니케이션 능력과 창의성을 활용할 수 있는 진로를 추천했습니다.");
-        jsonObject.put("selfAwareness", "MIDDLE");
-        jsonObject.put("selfAwarenessDescription", "자신의 강점과 관심사를 잘 인식하고 있으며, 이를 진로 방향성과 연결하는 능력이 뛰어납니다. 다만 구체적인 계획 수립 단계에서는 약간의 추가 고민이 필요할 수 있습니다.");
-        jsonObject.put("strengthSummary", "이 학생은 사람과 소통하는 것을 좋아하고, 팀워크를 중시하는 성향을 보였습니다.");
-        jsonObject.put("weaknessSummary", "창의적인 아이디어를 제안하는 데 흥미를 느끼며, 반복적인 작업에는 흥미를 느끼지 못하는 경향이 있습니다.");
-
-        jsonObject.put("strengths", new JSONArray(List.of("팀워크", "창의적 사고", "커뮤니케이션 능력")));
-        jsonObject.put("weaknesses", new JSONArray(List.of("반복 작업에 대한 낮은 흥미", "세부적인 규칙 준수에 대한 집중력 저하")));
-        jsonObject.put("interests", new JSONArray(List.of("마케팅", "브랜딩 기획", "교육 콘텐츠 개발")));
-        jsonObject.put("growthSuggestions", new JSONArray(List.of(
-                "교내 홍보 및 마케팅 활동에 참여하여 실전 경험 쌓기",
-                "다양한 주제에 대한 발표 및 아이디어 제안 활동 강화", "창의적 사고를 키우기 위해 프로젝트 기반 학습에 적극적으로 참여하기"
-        )));
-        jsonObject.put("jobSuggestions", new JSONArray(List.of(1068, 1103)));
-        jsonObject.put("jobSuggestionReasons", new JSONArray(List.of(
-                "소통 능력과 창의적인 아이디어 발휘 역량을 활용하여 브랜드와 서비스를 효과적으로 알릴 수 있습니다.",
-                "소통 능력과 창의적인 아이디어 발휘 역량을 활용하여 브랜드와 서비스를 효과적으로 알릴 수 있습니다."
-        )));
-        jsonObject.put("jobGrowthSuggestions", new JSONArray(List.of(
-                "1. 다양한 브랜드 캠페인을 분석하며 기획 아이디어를 떠올려보세요.  2. 사람들의 소비 트렌드를 관심 있게 관찰해보세요.  3. 친구들과 팀을 이루어 작은 프로젝트를 기획하고 실행해보세요.",
-                "1. 다양한 콘텐츠(영상, 글, 카드뉴스)를 분석하며 좋은 포인트를 기록해보세요.  2. 관심 있는 주제로 직접 짧은 콘텐츠를 기획하고 만들어보세요.  3. 다른 사람의 피드백을 받아 콘텐츠를 개선하는 연습을 해보세요."
-        )));
-
-        String content = jsonObject.toString();
+        String content = getReportContent();
 
         // when
         ResultActions actions = mockMvc.perform(
@@ -887,33 +865,7 @@ public class CounselControllerTest {
 
         // given
         Long counselId = 20001L;
-
-        JSONObject jsonObject = new JSONObject();
-
-        jsonObject.put("personality", "이 학생은 사람과 소통하는 것을 좋아하고, 팀워크를 중시하는 성향을 보였습니다.  창의적인 아이디어를 제안하는 데 흥미를 느끼며, 반복적인 작업에는 흥미를 느끼지 못하는 경향이 있습니다.  이러한 성향을 바탕으로 커뮤니케이션 능력과 창의성을 활용할 수 있는 진로를 추천했습니다.");
-        jsonObject.put("selfAwareness", "MIDDLE");
-        jsonObject.put("selfAwarenessDescription", "자신의 강점과 관심사를 잘 인식하고 있으며, 이를 진로 방향성과 연결하는 능력이 뛰어납니다. 다만 구체적인 계획 수립 단계에서는 약간의 추가 고민이 필요할 수 있습니다.");
-        jsonObject.put("strengthSummary", "이 학생은 사람과 소통하는 것을 좋아하고, 팀워크를 중시하는 성향을 보였습니다.");
-        jsonObject.put("weaknessSummary", "창의적인 아이디어를 제안하는 데 흥미를 느끼며, 반복적인 작업에는 흥미를 느끼지 못하는 경향이 있습니다.");
-
-        jsonObject.put("strengths", new JSONArray(List.of("팀워크", "창의적 사고", "커뮤니케이션 능력")));
-        jsonObject.put("weaknesses", new JSONArray(List.of("반복 작업에 대한 낮은 흥미", "세부적인 규칙 준수에 대한 집중력 저하")));
-        jsonObject.put("interests", new JSONArray(List.of("마케팅", "브랜딩 기획", "교육 콘텐츠 개발")));
-        jsonObject.put("growthSuggestions", new JSONArray(List.of(
-                "교내 홍보 및 마케팅 활동에 참여하여 실전 경험 쌓기",
-                "다양한 주제에 대한 발표 및 아이디어 제안 활동 강화", "창의적 사고를 키우기 위해 프로젝트 기반 학습에 적극적으로 참여하기"
-        )));
-        jsonObject.put("jobSuggestions", new JSONArray(List.of(1068, 1103)));
-        jsonObject.put("jobSuggestionReasons", new JSONArray(List.of(
-                "소통 능력과 창의적인 아이디어 발휘 역량을 활용하여 브랜드와 서비스를 효과적으로 알릴 수 있습니다.",
-                "소통 능력과 창의적인 아이디어 발휘 역량을 활용하여 브랜드와 서비스를 효과적으로 알릴 수 있습니다."
-        )));
-        jsonObject.put("jobGrowthSuggestions", new JSONArray(List.of(
-                "1. 다양한 브랜드 캠페인을 분석하며 기획 아이디어를 떠올려보세요.  2. 사람들의 소비 트렌드를 관심 있게 관찰해보세요.  3. 친구들과 팀을 이루어 작은 프로젝트를 기획하고 실행해보세요.",
-                "1. 다양한 콘텐츠(영상, 글, 카드뉴스)를 분석하며 좋은 포인트를 기록해보세요.  2. 관심 있는 주제로 직접 짧은 콘텐츠를 기획하고 만들어보세요.  3. 다른 사람의 피드백을 받아 콘텐츠를 개선하는 연습을 해보세요."
-        )));
-
-        String content = jsonObject.toString();
+        String content = getReportContent();
 
         // when
         ResultActions actions = mockMvc.perform(
@@ -962,33 +914,7 @@ public class CounselControllerTest {
 
         // given
         Long counselId = 6L;
-
-        JSONObject jsonObject = new JSONObject();
-
-        jsonObject.put("personality", "이 학생은 사람과 소통하는 것을 좋아하고, 팀워크를 중시하는 성향을 보였습니다.  창의적인 아이디어를 제안하는 데 흥미를 느끼며, 반복적인 작업에는 흥미를 느끼지 못하는 경향이 있습니다.  이러한 성향을 바탕으로 커뮤니케이션 능력과 창의성을 활용할 수 있는 진로를 추천했습니다.");
-        jsonObject.put("selfAwareness", "MIDDLE");
-        jsonObject.put("selfAwarenessDescription", "자신의 강점과 관심사를 잘 인식하고 있으며, 이를 진로 방향성과 연결하는 능력이 뛰어납니다. 다만 구체적인 계획 수립 단계에서는 약간의 추가 고민이 필요할 수 있습니다.");
-        jsonObject.put("strengthSummary", "이 학생은 사람과 소통하는 것을 좋아하고, 팀워크를 중시하는 성향을 보였습니다.");
-        jsonObject.put("weaknessSummary", "창의적인 아이디어를 제안하는 데 흥미를 느끼며, 반복적인 작업에는 흥미를 느끼지 못하는 경향이 있습니다.");
-
-        jsonObject.put("strengths", new JSONArray(List.of("팀워크", "창의적 사고", "커뮤니케이션 능력")));
-        jsonObject.put("weaknesses", new JSONArray(List.of("반복 작업에 대한 낮은 흥미", "세부적인 규칙 준수에 대한 집중력 저하")));
-        jsonObject.put("interests", new JSONArray(List.of("마케팅", "브랜딩 기획", "교육 콘텐츠 개발")));
-        jsonObject.put("growthSuggestions", new JSONArray(List.of(
-                "교내 홍보 및 마케팅 활동에 참여하여 실전 경험 쌓기",
-                "다양한 주제에 대한 발표 및 아이디어 제안 활동 강화", "창의적 사고를 키우기 위해 프로젝트 기반 학습에 적극적으로 참여하기"
-        )));
-        jsonObject.put("jobSuggestions", new JSONArray(List.of(1068)));
-        jsonObject.put("jobSuggestionReasons", new JSONArray(List.of(
-                "소통 능력과 창의적인 아이디어 발휘 역량을 활용하여 브랜드와 서비스를 효과적으로 알릴 수 있습니다.",
-                "소통 능력과 창의적인 아이디어 발휘 역량을 활용하여 브랜드와 서비스를 효과적으로 알릴 수 있습니다."
-        )));
-        jsonObject.put("jobGrowthSuggestions", new JSONArray(List.of(
-                "1. 다양한 브랜드 캠페인을 분석하며 기획 아이디어를 떠올려보세요.  2. 사람들의 소비 트렌드를 관심 있게 관찰해보세요.  3. 친구들과 팀을 이루어 작은 프로젝트를 기획하고 실행해보세요.",
-                "1. 다양한 콘텐츠(영상, 글, 카드뉴스)를 분석하며 좋은 포인트를 기록해보세요.  2. 관심 있는 주제로 직접 짧은 콘텐츠를 기획하고 만들어보세요.  3. 다른 사람의 피드백을 받아 콘텐츠를 개선하는 연습을 해보세요."
-        )));
-
-        String content = jsonObject.toString();
+        String content = getWrongReportContent();
 
         // when
         ResultActions actions = mockMvc.perform(
@@ -1802,5 +1728,395 @@ public class CounselControllerTest {
                                 .build()
                         ))
                 );
+    }
+
+    @Test
+    @DisplayName("보고서 조회 성공 - 학생(최종 x)")
+    public void find_report_details_success_student_not_final() throws Exception {
+
+        // given
+        Long counselId = 6L;
+
+        // when
+        createReport();
+
+        ResultActions actions = mockMvc.perform(
+                get("/api/counsels/{counselId}/reports", counselId)
+                        .header("Authorization", "Bearer " + studentToken2)
+                        .accept(APPLICATION_JSON)
+                        .characterEncoding("UTF-8")
+        );
+
+        //then
+        actions
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$.header.message").value(OK.getMessage()))
+                .andDo(document(
+                        "보고서 조회 성공 - 학생(최종x)",
+                        preprocessRequest(prettyPrint()),
+                        preprocessResponse(prettyPrint()),
+                        resource(ResourceSnippetParameters.builder()
+                                .tag("Counsel API")
+                                .summary("보고서 조회 API")
+                                .pathParameters(
+                                        List.of(
+                                                parameterWithName("counselId")
+                                                        .description("상담 아이디")
+                                        )
+                                )
+                                .requestHeaders(
+                                        headerWithName("Authorization").description("학생 어세스 토큰")
+                                )
+                                .responseFields(
+                                        getCommonResponseFields(
+                                                fieldWithPath("body.studentInfo").type(OBJECT)
+                                                        .description("학생 정보"),
+                                                fieldWithPath("body.studentInfo.name").type(STRING)
+                                                        .description("학생 이름"),
+                                                fieldWithPath("body.studentInfo.schoolName").type(STRING)
+                                                        .description("학교 이름"),
+                                                fieldWithPath("body.studentInfo.grade").type(NUMBER)
+                                                        .description("학년"),
+                                                fieldWithPath("body.teacherInfo").type(OBJECT)
+                                                        .description("담당교사 정보"),
+                                                fieldWithPath("body.teacherInfo.name").type(STRING)
+                                                        .description("교사 이름"),
+                                                fieldWithPath("body.teacherInfo.schoolName").type(STRING)
+                                                        .description("학교 이름"),
+                                                fieldWithPath("body.counselId").type(NUMBER)
+                                                        .description("상담 아이디"),
+                                                fieldWithPath("body.counselDate").type(STRING)
+                                                        .description("상담 시작일"),
+                                                fieldWithPath("body.counselStep").type(STRING)
+                                                        .description("상담 단계"),
+                                                fieldWithPath("body.personality").type(STRING)
+                                                        .description("성향 요약"),
+                                                fieldWithPath("body.selfAwareness").type(STRING)
+                                                        .description("자기 이해도"),
+                                                fieldWithPath("body.selfAwarenessDescription").type(STRING)
+                                                        .description("자기 이해도 설명"),
+                                                fieldWithPath("body.strengthSummary").type(STRING)
+                                                        .description("강점 요약"),
+                                                fieldWithPath("body.weaknessSummary").type(STRING)
+                                                        .description("약점 요약"),
+                                                fieldWithPath("body.strengths").type(ARRAY)
+                                                        .description("강점 리스트"),
+                                                fieldWithPath("body.weaknesses").type(ARRAY)
+                                                        .description("약점 리스트"),
+                                                fieldWithPath("body.interests").type(ARRAY)
+                                                        .description("흥미 리스트"),
+                                                fieldWithPath("body.jobRecommendations").type(ARRAY)
+                                                        .description("추천 직업 리스트"),
+                                                fieldWithPath("body.jobRecommendations[].id").type(NUMBER)
+                                                        .description("직업 아이디"),
+                                                fieldWithPath("body.jobRecommendations[].name").type(STRING)
+                                                        .description("직업 이름"),
+                                                fieldWithPath("body.jobRecommendations[].recommendReason").type(STRING)
+                                                        .description("직업 추천 이유"),
+                                                fieldWithPath("body.jobRecommendations[].growthSuggestion").type(STRING)
+                                                        .description("직업 성장 제안"),
+                                                fieldWithPath("body.jobRecommendations[].requiredSkills").type(ARRAY)
+                                                        .description("필요 역량"),
+                                                fieldWithPath("body.growthSuggestions").type(ARRAY)
+                                                        .description("성장 제안 리스트"),
+                                                fieldWithPath("body.teacherFeedback").type(NULL)
+                                                        .description("교사 피드백(내용 없음)")
+                                        )
+                                )
+                                .requestSchema(Schema.schema("보고서 조회 (학생 , 최종 x) Request"))
+                                .responseSchema(Schema.schema("보고서 조회 (학생 , 최종 x) Response"))
+                                .build()
+                        ))
+                );
+    }
+
+    @Test
+    @DisplayName("보고서 조회 성공 - 교사")
+    public void find_report_details_success_teacher() throws Exception {
+
+        // given
+        Long counselId = 6L;
+
+        // when
+        createReport();
+
+        ResultActions actions = mockMvc.perform(
+                get("/api/counsels/{counselId}/reports", counselId)
+                        .header("Authorization", "Bearer " + teacherToken)
+                        .accept(APPLICATION_JSON)
+                        .characterEncoding("UTF-8")
+        );
+
+        //then
+        actions
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$.header.message").value(OK.getMessage()))
+                .andDo(document(
+                        "보고서 조회 성공 - 교사",
+                        preprocessRequest(prettyPrint()),
+                        preprocessResponse(prettyPrint()),
+                        resource(ResourceSnippetParameters.builder()
+                                .tag("Counsel API")
+                                .summary("보고서 조회 API")
+                                .pathParameters(
+                                        List.of(
+                                                parameterWithName("counselId")
+                                                        .description("상담 아이디")
+                                        )
+                                )
+                                .requestHeaders(
+                                        headerWithName("Authorization").description("교사 어세스 토큰")
+                                )
+                                .responseFields(
+                                        getCommonResponseFields(
+                                                fieldWithPath("body.studentInfo").type(OBJECT)
+                                                        .description("학생 정보"),
+                                                fieldWithPath("body.studentInfo.name").type(STRING)
+                                                        .description("학생 이름"),
+                                                fieldWithPath("body.studentInfo.schoolName").type(STRING)
+                                                        .description("학교 이름"),
+                                                fieldWithPath("body.studentInfo.grade").type(NUMBER)
+                                                        .description("학년"),
+                                                fieldWithPath("body.teacherInfo").type(OBJECT)
+                                                        .description("담당교사 정보"),
+                                                fieldWithPath("body.teacherInfo.name").type(STRING)
+                                                        .description("교사 이름"),
+                                                fieldWithPath("body.teacherInfo.schoolName").type(STRING)
+                                                        .description("학교 이름"),
+                                                fieldWithPath("body.counselId").type(NUMBER)
+                                                        .description("상담 아이디"),
+                                                fieldWithPath("body.counselDate").type(STRING)
+                                                        .description("상담 시작일"),
+                                                fieldWithPath("body.counselStep").type(STRING)
+                                                        .description("상담 단계"),
+                                                fieldWithPath("body.personality").type(STRING)
+                                                        .description("성향 요약"),
+                                                fieldWithPath("body.selfAwareness").type(STRING)
+                                                        .description("자기 이해도"),
+                                                fieldWithPath("body.selfAwarenessDescription").type(STRING)
+                                                        .description("자기 이해도 설명"),
+                                                fieldWithPath("body.strengthSummary").type(STRING)
+                                                        .description("강점 요약"),
+                                                fieldWithPath("body.weaknessSummary").type(STRING)
+                                                        .description("약점 요약"),
+                                                fieldWithPath("body.strengths").type(ARRAY)
+                                                        .description("강점 리스트"),
+                                                fieldWithPath("body.weaknesses").type(ARRAY)
+                                                        .description("약점 리스트"),
+                                                fieldWithPath("body.interests").type(ARRAY)
+                                                        .description("흥미 리스트"),
+                                                fieldWithPath("body.jobRecommendations").type(ARRAY)
+                                                        .description("추천 직업 리스트"),
+                                                fieldWithPath("body.jobRecommendations[].id").type(NUMBER)
+                                                        .description("직업 아이디"),
+                                                fieldWithPath("body.jobRecommendations[].name").type(STRING)
+                                                        .description("직업 이름"),
+                                                fieldWithPath("body.jobRecommendations[].recommendReason").type(STRING)
+                                                        .description("직업 추천 이유"),
+                                                fieldWithPath("body.jobRecommendations[].growthSuggestion").type(STRING)
+                                                        .description("직업 성장 제안"),
+                                                fieldWithPath("body.jobRecommendations[].requiredSkills").type(ARRAY)
+                                                        .description("필요 역량"),
+                                                fieldWithPath("body.growthSuggestions").type(ARRAY)
+                                                        .description("성장 제안 리스트"),
+                                                fieldWithPath("body.teacherFeedback").type(OBJECT)
+                                                        .description("교사 피드백"),
+                                                fieldWithPath("body.teacherFeedback.comment").type(STRING)
+                                                        .description("담당교사 한마디"),
+                                                fieldWithPath("body.teacherFeedback.jobSuggestion").type(STRING)
+                                                        .description("담당교사 직업 추천"),
+                                                fieldWithPath("body.teacherFeedback.guidance").type(ARRAY)
+                                                        .description("담당교사 성장 지도")
+                                        )
+                                )
+                                .requestSchema(Schema.schema("보고서 조회 (교사) Request"))
+                                .responseSchema(Schema.schema("보고서 조회 (교사) Response"))
+                                .build()
+                        ))
+                );
+    }
+
+    @Test
+    @DisplayName("보고서 조회 성공 - 학생(최종)")
+    public void find_report_details_success_student_final() throws Exception {
+
+        // given
+        Long counselId = 1L;
+
+        // when
+        ResultActions actions = mockMvc.perform(
+                get("/api/counsels/{counselId}/reports", counselId)
+                        .header("Authorization", "Bearer " + studentToken)
+                        .accept(APPLICATION_JSON)
+                        .characterEncoding("UTF-8")
+        );
+
+        //then
+        actions
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$.header.message").value(OK.getMessage()))
+                .andDo(document(
+                        "보고서 조회 성공 - 학생(최종)",
+                        preprocessRequest(prettyPrint()),
+                        preprocessResponse(prettyPrint()),
+                        resource(ResourceSnippetParameters.builder()
+                                .tag("Counsel API")
+                                .summary("보고서 조회 API")
+                                .pathParameters(
+                                        List.of(
+                                                parameterWithName("counselId")
+                                                        .description("상담 아이디")
+                                        )
+                                )
+                                .requestHeaders(
+                                        headerWithName("Authorization").description("학생 어세스 토큰")
+                                )
+                                .responseFields(
+                                        getCommonResponseFields(
+                                                fieldWithPath("body.studentInfo").type(OBJECT)
+                                                        .description("학생 정보"),
+                                                fieldWithPath("body.studentInfo.name").type(STRING)
+                                                        .description("학생 이름"),
+                                                fieldWithPath("body.studentInfo.schoolName").type(STRING)
+                                                        .description("학교 이름"),
+                                                fieldWithPath("body.studentInfo.grade").type(NUMBER)
+                                                        .description("학년"),
+                                                fieldWithPath("body.teacherInfo").type(OBJECT)
+                                                        .description("담당교사 정보"),
+                                                fieldWithPath("body.teacherInfo.name").type(STRING)
+                                                        .description("교사 이름"),
+                                                fieldWithPath("body.teacherInfo.schoolName").type(STRING)
+                                                        .description("학교 이름"),
+                                                fieldWithPath("body.counselId").type(NUMBER)
+                                                        .description("상담 아이디"),
+                                                fieldWithPath("body.counselDate").type(STRING)
+                                                        .description("상담 시작일"),
+                                                fieldWithPath("body.counselStep").type(STRING)
+                                                        .description("상담 단계"),
+                                                fieldWithPath("body.personality").type(STRING)
+                                                        .description("성향 요약"),
+                                                fieldWithPath("body.selfAwareness").type(STRING)
+                                                        .description("자기 이해도"),
+                                                fieldWithPath("body.selfAwarenessDescription").type(STRING)
+                                                        .description("자기 이해도 설명"),
+                                                fieldWithPath("body.strengthSummary").type(STRING)
+                                                        .description("강점 요약"),
+                                                fieldWithPath("body.weaknessSummary").type(STRING)
+                                                        .description("약점 요약"),
+                                                fieldWithPath("body.strengths").type(ARRAY)
+                                                        .description("강점 리스트"),
+                                                fieldWithPath("body.weaknesses").type(ARRAY)
+                                                        .description("약점 리스트"),
+                                                fieldWithPath("body.interests").type(ARRAY)
+                                                        .description("흥미 리스트"),
+                                                fieldWithPath("body.jobRecommendations").type(ARRAY)
+                                                        .description("추천 직업 리스트"),
+                                                fieldWithPath("body.jobRecommendations[].id").type(NUMBER)
+                                                        .description("직업 아이디"),
+                                                fieldWithPath("body.jobRecommendations[].name").type(STRING)
+                                                        .description("직업 이름"),
+                                                fieldWithPath("body.jobRecommendations[].recommendReason").type(STRING)
+                                                        .description("직업 추천 이유"),
+                                                fieldWithPath("body.jobRecommendations[].growthSuggestion").type(STRING)
+                                                        .description("직업 성장 제안"),
+                                                fieldWithPath("body.jobRecommendations[].requiredSkills").type(ARRAY)
+                                                        .description("필요 역량"),
+                                                fieldWithPath("body.growthSuggestions").type(ARRAY)
+                                                        .description("성장 제안 리스트"),
+                                                fieldWithPath("body.teacherFeedback").type(OBJECT)
+                                                        .description("교사 피드백"),
+                                                fieldWithPath("body.teacherFeedback.comment").type(STRING)
+                                                        .description("담당교사 한마디"),
+                                                fieldWithPath("body.teacherFeedback.jobSuggestion").type(STRING)
+                                                        .description("담당교사 직업 추천"),
+                                                fieldWithPath("body.teacherFeedback.guidance").type(ARRAY)
+                                                        .description("담당교사 성장 지도"),
+                                                fieldWithPath("body.teacherFeedback.guidance[].seq").type(NUMBER)
+                                                        .description("번호"),
+                                                fieldWithPath("body.teacherFeedback.guidance[].content").type(STRING)
+                                                        .description("내용")
+                                        )
+                                )
+                                .requestSchema(Schema.schema("보고서 조회 (학생 , 최종) Request"))
+                                .responseSchema(Schema.schema("보고서 조회 (학생 , 최종) Response"))
+                                .build()
+                        ))
+                );
+    }
+
+    private String getReportContent() throws Exception{
+
+        JSONObject jsonObject = new JSONObject();
+
+        jsonObject.put("personality", "이 학생은 사람과 소통하는 것을 좋아하고, 팀워크를 중시하는 성향을 보였습니다.  창의적인 아이디어를 제안하는 데 흥미를 느끼며, 반복적인 작업에는 흥미를 느끼지 못하는 경향이 있습니다.  이러한 성향을 바탕으로 커뮤니케이션 능력과 창의성을 활용할 수 있는 진로를 추천했습니다.");
+        jsonObject.put("selfAwareness", "MIDDLE");
+        jsonObject.put("selfAwarenessDescription", "자신의 강점과 관심사를 잘 인식하고 있으며, 이를 진로 방향성과 연결하는 능력이 뛰어납니다. 다만 구체적인 계획 수립 단계에서는 약간의 추가 고민이 필요할 수 있습니다.");
+        jsonObject.put("strengthSummary", "이 학생은 사람과 소통하는 것을 좋아하고, 팀워크를 중시하는 성향을 보였습니다.");
+        jsonObject.put("weaknessSummary", "창의적인 아이디어를 제안하는 데 흥미를 느끼며, 반복적인 작업에는 흥미를 느끼지 못하는 경향이 있습니다.");
+
+        jsonObject.put("strengths", new JSONArray(List.of("팀워크", "창의적 사고", "커뮤니케이션 능력")));
+        jsonObject.put("weaknesses", new JSONArray(List.of("반복 작업에 대한 낮은 흥미", "세부적인 규칙 준수에 대한 집중력 저하")));
+        jsonObject.put("interests", new JSONArray(List.of("마케팅", "브랜딩 기획", "교육 콘텐츠 개발")));
+        jsonObject.put("growthSuggestions", new JSONArray(List.of(
+                "교내 홍보 및 마케팅 활동에 참여하여 실전 경험 쌓기",
+                "다양한 주제에 대한 발표 및 아이디어 제안 활동 강화", "창의적 사고를 키우기 위해 프로젝트 기반 학습에 적극적으로 참여하기"
+        )));
+        jsonObject.put("jobSuggestions", new JSONArray(List.of(1068, 1103)));
+        jsonObject.put("jobSuggestionReasons", new JSONArray(List.of(
+                "소통 능력과 창의적인 아이디어 발휘 역량을 활용하여 브랜드와 서비스를 효과적으로 알릴 수 있습니다.",
+                "소통 능력과 창의적인 아이디어 발휘 역량을 활용하여 브랜드와 서비스를 효과적으로 알릴 수 있습니다."
+        )));
+        jsonObject.put("jobGrowthSuggestions", new JSONArray(List.of(
+                "1. 다양한 브랜드 캠페인을 분석하며 기획 아이디어를 떠올려보세요.  2. 사람들의 소비 트렌드를 관심 있게 관찰해보세요.  3. 친구들과 팀을 이루어 작은 프로젝트를 기획하고 실행해보세요.",
+                "1. 다양한 콘텐츠(영상, 글, 카드뉴스)를 분석하며 좋은 포인트를 기록해보세요.  2. 관심 있는 주제로 직접 짧은 콘텐츠를 기획하고 만들어보세요.  3. 다른 사람의 피드백을 받아 콘텐츠를 개선하는 연습을 해보세요."
+        )));
+
+        return jsonObject.toString();
+    }
+
+    private String getWrongReportContent() throws Exception{
+
+        JSONObject jsonObject = new JSONObject();
+
+        jsonObject.put("personality", "이 학생은 사람과 소통하는 것을 좋아하고, 팀워크를 중시하는 성향을 보였습니다.  창의적인 아이디어를 제안하는 데 흥미를 느끼며, 반복적인 작업에는 흥미를 느끼지 못하는 경향이 있습니다.  이러한 성향을 바탕으로 커뮤니케이션 능력과 창의성을 활용할 수 있는 진로를 추천했습니다.");
+        jsonObject.put("selfAwareness", "MIDDLE");
+        jsonObject.put("selfAwarenessDescription", "자신의 강점과 관심사를 잘 인식하고 있으며, 이를 진로 방향성과 연결하는 능력이 뛰어납니다. 다만 구체적인 계획 수립 단계에서는 약간의 추가 고민이 필요할 수 있습니다.");
+        jsonObject.put("strengthSummary", "이 학생은 사람과 소통하는 것을 좋아하고, 팀워크를 중시하는 성향을 보였습니다.");
+        jsonObject.put("weaknessSummary", "창의적인 아이디어를 제안하는 데 흥미를 느끼며, 반복적인 작업에는 흥미를 느끼지 못하는 경향이 있습니다.");
+
+        jsonObject.put("strengths", new JSONArray(List.of("팀워크", "창의적 사고", "커뮤니케이션 능력")));
+        jsonObject.put("weaknesses", new JSONArray(List.of("반복 작업에 대한 낮은 흥미", "세부적인 규칙 준수에 대한 집중력 저하")));
+        jsonObject.put("interests", new JSONArray(List.of("마케팅", "브랜딩 기획", "교육 콘텐츠 개발")));
+        jsonObject.put("growthSuggestions", new JSONArray(List.of(
+                "교내 홍보 및 마케팅 활동에 참여하여 실전 경험 쌓기",
+                "다양한 주제에 대한 발표 및 아이디어 제안 활동 강화", "창의적 사고를 키우기 위해 프로젝트 기반 학습에 적극적으로 참여하기"
+        )));
+        jsonObject.put("jobSuggestions", new JSONArray(List.of(1068)));
+        jsonObject.put("jobSuggestionReasons", new JSONArray(List.of(
+                "소통 능력과 창의적인 아이디어 발휘 역량을 활용하여 브랜드와 서비스를 효과적으로 알릴 수 있습니다.",
+                "소통 능력과 창의적인 아이디어 발휘 역량을 활용하여 브랜드와 서비스를 효과적으로 알릴 수 있습니다."
+        )));
+        jsonObject.put("jobGrowthSuggestions", new JSONArray(List.of(
+                "1. 다양한 브랜드 캠페인을 분석하며 기획 아이디어를 떠올려보세요.  2. 사람들의 소비 트렌드를 관심 있게 관찰해보세요.  3. 친구들과 팀을 이루어 작은 프로젝트를 기획하고 실행해보세요.",
+                "1. 다양한 콘텐츠(영상, 글, 카드뉴스)를 분석하며 좋은 포인트를 기록해보세요.  2. 관심 있는 주제로 직접 짧은 콘텐츠를 기획하고 만들어보세요.  3. 다른 사람의 피드백을 받아 콘텐츠를 개선하는 연습을 해보세요."
+        )));
+
+        return jsonObject.toString();
+    }
+
+    private void createReport() throws Exception{
+
+        Long counselId = 6L;
+        String content = getReportContent();
+
+        mockMvc.perform(
+                post("/api/counsels/{counselId}/reports", counselId)
+                        .header("Authorization", "Bearer " + adminToken)
+                        .accept(APPLICATION_JSON)
+                        .contentType(APPLICATION_JSON)
+                        .content(content)
+                        .characterEncoding("UTF-8")
+        );
+
     }
 }
