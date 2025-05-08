@@ -2,6 +2,7 @@ package site.chatda.domain.counsel.service;
 
 import site.chatda.domain.counsel.dto.req.*;
 import site.chatda.domain.counsel.dto.res.CounselListRes;
+import site.chatda.domain.counsel.dto.res.ReportDetailsRes;
 import site.chatda.domain.member.entity.Member;
 
 public interface CounselService {
@@ -23,4 +24,6 @@ public interface CounselService {
     void saveTeacherJobSuggestion(Member member, Long counselId, SaveTeacherJobSuggestionReq saveTeacherJobSuggestionReq);
 
     void saveTeacherGuidance(Member member, Long counselId, Integer seq, SaveTeacherGuidanceReq saveTeacherGuidanceReq);
+
+    ReportDetailsRes getReportDetails(Member member, Long counselId);
 }

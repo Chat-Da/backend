@@ -4,6 +4,8 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
+import site.chatda.domain.counsel.dto.StudentInfoDto;
+import site.chatda.domain.counsel.dto.TeacherInfoDto;
 import site.chatda.domain.member.dto.CounselStepDto;
 import site.chatda.domain.member.entity.Member;
 import site.chatda.domain.member.entity.Student;
@@ -66,4 +68,22 @@ public interface MemberRepository extends JpaRepository<Member, Long> {
             "join fetch m.classes c " +
             "where c = :classes ")
     Optional<Teacher> findHomeRoomTeacher(@Param("classes") Classes classes);
+
+    @Query("select new site.chatda.domain.counsel.dto.StudentInfoDto(" +
+            "   m.name, sc.name, c.id.level) " +
+            "from Student s " +
+            "join s.member m " +
+            "join m.classes c " +
+            "join c.school sc " +
+            "where s.id = :studentId")
+    Optional<StudentInfoDto> findStudentInfo(@Param("studentId") Long studentId);
+
+    @Query("select new site.chatda.domain.counsel.dto.TeacherInfoDto(" +
+            "   m.name, s.name) " +
+            "from Teacher t " +
+            "join t.member m " +
+            "join m.classes c " +
+            "join c.school s " +
+            "where t.id = :teacherId")
+    Optional<TeacherInfoDto> findTeacherInfo(@Param("teacherId") Long teacherId);
 }

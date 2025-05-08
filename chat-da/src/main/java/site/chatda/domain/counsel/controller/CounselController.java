@@ -6,6 +6,7 @@ import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 import site.chatda.domain.counsel.dto.req.*;
 import site.chatda.domain.counsel.dto.res.CounselListRes;
+import site.chatda.domain.counsel.dto.res.ReportDetailsRes;
 import site.chatda.domain.counsel.service.CounselService;
 import site.chatda.domain.member.entity.Member;
 import site.chatda.global.argument_resolver.LoginMember;
@@ -111,5 +112,14 @@ public class CounselController {
         counselService.saveTeacherGuidance(member, counselId, seq, saveTeacherGuidanceReq);
 
         return ResponseDto.success(CREATED);
+    }
+
+    @GetMapping("/{counselId}/reports")
+    public ResponseDto<ReportDetailsRes> reportDetails(@LoginMember Member member,
+                                                       @PathVariable("counselId") Long counselId) {
+
+        ReportDetailsRes result = counselService.getReportDetails(member, counselId);
+
+        return ResponseDto.success(OK, result);
     }
 }
