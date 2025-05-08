@@ -32,7 +32,6 @@ public class SecurityConfig {
     @Value("${BASE_URL}")
     private String baseURL;
 
-
     private final JwtUtils jwtUtils;
     private final UserDetailsService userDetailsService;
 
@@ -72,7 +71,7 @@ public class SecurityConfig {
         config.setExposedHeaders(List.of("Authorization"));
         config.setAllowedHeaders(Arrays.asList("Authorization", "Content-Type"));
         config.setAllowedMethods(Arrays.asList("GET", "POST", "PATCH", "PUT", "DELETE", "OPTIONS"));
-        config.setAllowedOrigins(Arrays.asList("http://localhost:3000", baseURL));
+        config.setAllowedOrigins(Arrays.asList("http://localhost:3000", "http://localhost:5173", baseURL));
         config.setAllowCredentials(true);
 
         UrlBasedCorsConfigurationSource source =
